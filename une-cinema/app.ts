@@ -75,10 +75,11 @@ class SeatMap {
     }
 
     getSelectedSeatsID() {
-        this.selectedSeats = this.rows.reduce<number[]>((total, row) => {
-            total = [...total, ...row.selectedSeatsID]
-            return total
-        }, [])
+        // this.selectedSeats = this.rows.reduce<number[]>((total, row) => {
+        //     total = [...total, ...row.selectedSeatsID]
+        //     return total
+        // }, [])
+        this.selectedSeats = this.rows.map(row => row.selectedSeatsID).flat()
         console.log(`selected seats: ${this.selectedSeats.join(',\n')}`)
     }
     
