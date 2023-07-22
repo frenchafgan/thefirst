@@ -12,7 +12,7 @@ const movies = [
         title: 'Jurassic World Dominion',
         poster:
             'https://cdn.eventcinemas.com.au/cdn/resources/movies/15020/images/largeposter.jpg',
-        theater: {
+        theatre: {
             rowNumber: 8,
             seatNumberPerRow: 8,
             occupiedSeats: [2, 6, 12, 3],
@@ -24,7 +24,7 @@ const movies = [
         title: 'Top Gun: Maverick',
         poster:
             'https://cdn.eventcinemas.com.au/cdn/resources/movies/14621/images/largeposter.jpg',
-        theater: {
+        theatre: {
             rowNumber: 10,
             seatNumberPerRow: 12,
             occupiedSeats: [3, 4, 13, 14],
@@ -35,7 +35,7 @@ const movies = [
         title: 'Doctor Strange in the Multiverse of Madness',
         poster:
             'https://cdn.eventcinemas.com.au/cdn/resources/movies/15657/images/largeposter.jpg',
-        theater: {
+        theatre: {
             rowNumber: 9,
             seatNumberPerRow: 13,
             occupiedSeats: [15, 16, 22, 3, 5],

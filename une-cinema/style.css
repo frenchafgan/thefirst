@@ -37,7 +37,7 @@ body {
 .movie {
     width: 200px;
     height: 300px;
-    background-color: #af43af;
+    /* background-color: #af43af; */
     color: white;
     display: flex;
     flex-direction: column;
