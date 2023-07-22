@@ -141,7 +141,8 @@ body {
 }
 
 .seat.available:hover {
-    background-color: #1e1e22;
-    opacity: 0.5;
+    transform: background-color #e65c0d;
+    background-color: #d6a182;
+    opacity: 1;
 }
 
