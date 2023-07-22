@@ -56,3 +56,92 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
+.poster {
+    flex: 1;
+    width: 100%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0.25rem;
+    height: 60px;
+    text-align: center;
+}
+
+
+.theatre{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    max-width: 1000px;
+    margin: 0 auto;
+    perspective: 600px;    
+    
+}
+
+
+.screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #aaa;
+    height: 100%;
+    width: 10rem;
+
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    transform: rotateX(-45deg);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 900;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    transform-origin: bottom;
+    position: relative;
+}
+
+
+
+.seat-map{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.row {
+    display: flex;
+    column-gap: 0.5rem;
+}
+
+.seat {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #f8b8b8;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.seat.occupied {
+    background-color: #242222;
+    cursor: not-allowed;
+}
+
+.seat.selected {
+    background-color: #4F58DF;
+}
+
+.seat.available {
+    background-color: #ccc;
+}
+
+.seat.available:hover {
+    background-color: #1e1e22;
+    opacity: 0.5;
+}
+
