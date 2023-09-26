@@ -1,0 +1,297 @@
+Week 11:
+Social AI
+COSC350/550
+Artificial Intelligence
+               Agenda
+
+
+
+
+1   Social Cognition
+
+2   Designing AI Solutions for Humans
+Social Cognition
+ Similar gesture, similar
+actors, similar context...
+...Yet, different meaning
+            Last week we defined human cognition as
+            "those processes by which the sensory input
+            is transformed, reduced, elaborated, stored,
+            recovered, and used" (Neisser, 1967)
+Social
+            Social cognition is "the set of mental
+Cognition   processes required to make sense of others’
+            actions and react appropriately to them"
+            (Langton et al., 2000)
+            Umbrella term referring to a wide range of mental processes required
+            to perceive, process, and interpret social information
+           Thoughts, Desires, Beliefs
+
+
+
+Emotions
+                                        Humans communicate their thoughts,
+                        Intentions      desires, beliefs, intentions and
+                                        emotions during social interactions
+                                        through social cues
+                                         Language
+                                         Speech intonation
+                                         Facial expressions
+                                         Gaze
+                                         Gestures
+                                         ...
+Is this process only happening
+  with people's interactions?
+          Let's watch a short video...
+How would you summarise
+ what you just watched?
+             An experiment from 1944
+
+             Demonstrating that human observers
+             interpreted simple geometric shapes moving on
+             the screen as rational agents having intentions,
+             desires and beliefs
+Heider and
+             No need to have human features or display
+Simmel       common human social cues
+Experiment
+             Claiming that humans have an "instinct for
+             storytelling"
+
+             This study shows how humans are incline to
+             use their personal knowledge and experience
+             of social interactions to explain events
+          Psychology literature suggests that a
+          precondition to correctly master social
+          cognition is to understand that others have
+          different minds
+          i.e. different beliefs, desires, intentions and knowledge
+
+Theory    This ability of understanding that others have
+of Mind   different minds is known as Theory of Mind
+
+          In humans, gradually developed during the
+          first 3-5 years of life. Not available from birth!
+
+          Let's see it in action...
+What happened during
+  this experiment?
+Why does an AI unit cover
+works on social cognition?
+         Modern AI technologies are used by
+         everyone
+
+         It must be easy to use these AI technologies,
+         the interactions must be natural
+AI and   To achieve this objective, AI models must
+Humans   make sense of human behaviour, as us
+         humans we do with other human agents
+
+         Knowledge from psychology and other
+         social sciences helps to implement AI
+         models capable of such skills
+Designing AI Solutions
+     for Humans
+Successful and Insuccessful Social Interactions
+                Sender: Generative Process
+
+
+
+                Latent hidden mental states Xs of the sender generates observable social cues
+                Y
+
+                Recipient: Inferential Process
+From a
+Computational
+Perspective     The observable social cues Y are sensed by the observer and the observer
+                makes an inference Xis of the sender's mental state
+
+                The inferred mental states may or may not be correct:
+
+
+
+
+                Social AI technologies should minimise these errors to prevent poor levels of
+                human-machine interactions
+               Social AI
+  A machine or artificial agent using Artificial
+Intelligence to perceive, process, interpret and
+          respond to social interactions
+             AI agents' sensors can include noise that if not handled
+             correctly may lead to unexpected behaviour
+             It is important to design appropriate fallbacks
+
+
+             AI algorithms do not perceive and interpret the world as we
+             do. They are as good as the underlying models they are
+             built upon
+             The choice of models and techniques based on the given context is crucial
+
+
+Social AI    The data used to train the models may be incorrect or
+             include biases. Errors and biases may be learned by the AI
+Challenges   agent and lead to wrong decisions
+             Make sure that the data is free from "garbage"
+
+
+             Understanding and predicting human behaviour is a
+             complex endeavour… even for humans
+             Literature in psychology and social sciences helps
+
+
+             Less is more. A simple but effective solution is better than
+             a complex and fancy but ineffective one
+             Sometimes, an "illusion" of intelligence is enough
+                                                An Experiment
+Raza, S.A., Vitale, J., Tonkin, M. et al. An in-the-wild study to find type of questions people ask to a social robot providing question-
+                                   answering service. Intelligent Service Robotics 15, 411–426 (2022).
+
+
+
+
+                                                                                A Q&A social robot
+                                                                                A social robot tasked to take
+                                                                                questions from visitors during the
+                                                                                university OpenDay
+
+                                                                                The experiment recorded
+                                                                                the visitors' queries and
+                                                                                analysed them
+
+                                                                                People asked the robot
+                                                                                personal questions about
+                                                                                its beliefs, preferences,
+                                                                                opinions and emotions
+                                                  Source: SprigerLink article
+Examples context-unrelated questions
+
+
+   Can you shake my hand?
+
+   What's your favourite colour?
+
+   What is the meaning of life?
+
+   Tell me a joke
+
+   Do you believe in God?
+Why do these results matter?
+               Of course, if we know which types of
+               questions people would ask to the AI agent,
+               we can build models that would predict them
+It's not all   and correctly answer them
+about          But that's not all... it is clear that for some
+accuracy       questions we need to design a character for
+               the AI agent
+               We need to determine its favourite colour, preferences, opinions,
+               beliefs... and a personality
+               Answers to these questions are not found on the web!
+           Agents designed for social AI solutions do
+           not have to be only rational but also social
+
+Not only   Social aspects include:
+            Personality
+rational    Identity (sometimes even branding)
+            Design of the expected interactions
+            Dialogs
+            Behaviour
+               A personality is identified as an essential
+               components for the success of social AI
+               solutions
+
+               Users automatically attribute a personality
+               (and beliefs, thoughts, ...) to social AI
+Why a          themselves. If the social AI has a well
+               defined personality we can limit the risk of
+personality?   users attributing negative or undesired
+               personality traits to them
+
+               If the personality is in-line with the designed
+               and intended experience, it will benefit the
+               overall user experience with the system
+               ... and help when the agent fails
+                     Amazon Alexa
+
+
+
+Alexa strives to be clever, relevant, and make the customer smile.
+Alexa will respond to questions about herself, answer to "I love you,"
+tell jokes, and even sing a song. Alexa’s humor shines through, but
+never at the expense of efficiency. Performing the requested task
+instantly and accurately is always her primary goal. Alexa is
+approachable, efficient, trustworthy, and natural. These unique
+personality characteristics make Alexa, Alexa.
+
+
+https://developer.amazon.com/en-US/alexa/branding/alexa-
+guidelines/communication-guidelines/brand-voice
+                  Google Assistant
+
+
+‘She comes from Colorado, a state in a region that lacks a distinctive
+accent. “She’s the youngest daughter of a research librarian and a
+physics professor who has a B.A. in art history from Northwestern,”
+Giangola continues. When she was a child, she won $100,000 on
+Jeopardy: Kids Edition. She used to work as a personal assistant to
+“a very popular late-night-TV satirical pundit.” And she enjoys
+kayaking.’
+
+
+Isobel Hamilton (2018) Google gave Google Assistant a weirdly
+specific backstory to get her voice just right
+https://www.businessinsider.com/google-gave-google-assistant-a-
+weirdly-specific-backstory-2018-10?r=DE&IR=T
+            1   People attributes beliefs, desires,
+                intentions, emotions and other mental
+                states to machines and intelligent agents
+
+            2   For a social AI solution, achieving high
+Take-home       accuracy to correctly understanding and
+                responding to social interactions is
+messages        important but not sufficient
+            3   An agent designed for a social AI solution
+                must display social skills and those
+                include the design of a personality,
+                preferences, beliefs, etc.
+AI is not only about math and statistics!
+      The AI community also needs people from different disciplines:
+
+     psychologists, social scientists, designers, artists, copywriters, ...
+                                       Summary
+
+Social Cognition
+ Social cognition can be defined as the set of mental processes required to make sense of others’
+ actions and react appropriately to them
+ Mental states of human agents are expressed via social cues
+ These social cues can be picked up by other social agents to infer the mental state of the social
+ interaction partner
+ This inference is not a phenomenon only applied to human-human interactions. Humans can
+ attribute desires, intentions and beliefs to non-human agents
+ Theory of Mind is a precondition for functional social cognition skills
+ Knowledge from psychology and other social sciences is crucial to design appropriate AI solutions
+ for humans
+                              Summary (continue)
+
+Designing AI Solutions for Humans
+ A social AI agent can be defined as a machine or artificial agent using AI to perceive, process,
+ interpret and respond to social interactions
+ Computationally speaking, the hidden mental state X of an agent will generate observable social cues
+ Y that can be observed by another agent to infer the hidden mental state X
+ The inferred mental state may be correct or incorrect, thus contributing to the accuracy of the
+ designed social agent
+ Social AI agents use sensors to gather social cues and use actuators to respond with appropriate
+ social cues and social interactions
+ Challenges for social AI solutions include noisy sensors, inappropriate models, biased data, underlying
+ complexity of social interactions, and the need of designing simple but effective solutions
+ Accuracy is not enough, a social AI solution must also included the design appropriate social aspects
+               Week 12: Trust, Privacy and Ethics in AI
+
+               Recommended activities for Week 11:
+                The textbook does not include the topics covered during this week.
+What's next?    Simply refer to the slides and to the recommended readings for this
+                week
+                There are no workshop's exercises for this week but there are
+                workshop sessions for internal students. Use them to work on the
+                assignment and to ask assistance from your tutor.
+                For any question, please use the forum or send me an email
+

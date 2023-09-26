@@ -1,0 +1,871 @@
+Week 3:
+Classical Search Strategies
+COSC350/550
+Artificial Intelligence
+               Agenda
+
+
+
+1   Problems and Solutions
+
+2   Problem-Solving Agents
+3   Search Strategies
+
+4   Uninformed Search Strategies
+5   Informed Search Strategies
+Problems and Solutions
+We have an agent with goals, it knows something
+            about the world, and it
+ got sensors and actuators to interact with the
+                    world...
+               ...so now what?
+We need to find a way to achieve the desired
+    goal, i.e. we need to find a solution
+              ... but solution to what?
+               When we have a solution without a clear
+               problem, then we do not have a solution!
+
+               Always start from the problem, then identify
+               a solution
+Defining the   A proposed "solution" not following a clear defined problem might
+Problem        actually create more problems... especially in the AI field!
+
+
+               Typically, the problem derives from a set of
+               requirements or needs provided by a client
+               In this Unit, the "client" is your Unit Coordinator offering requirements
+               that are necessary to successfully complete the required assignments
+                 We need to analyse the requirements and
+                 shape them into a problem
+
+                 But we need a representation of the problem
+                 that works on a computer
+                 How can we represent the problem with appropriate data structures?
+Problem          What data structures and models should we use so that it is feasible
+Representation   and efficient to solve the problem with algorithms?
+                 Is there already an effective computational representation of this
+                 problem?
+
+
+                 Not all the representations are the same
+                 Some are better than others and some allows to reduce the
+                 computational complexity of the problem while still ensuring a correct
+                 solution for it
+               Previously, we mentioned that:
+               A Task Environment (PEAS) characterises our problem
+               The Rational Agent identifies our solution
+
+               Task environments offer a structure to list the "ingredients"
+               for our problem
+               They define our "problem space"
+
+Back to        The structures of the rational agents we reviewed last
+               week offer the "meals" that we can prepare with those
+Task           "ingredients"
+Environments   A rational agent operates within the defined problem space to find a solution
+               Some "meals" are better than others (more tasty, healthy, ....)
+
+               Now we need the tools and the method to "cook the meal"
+
+               Of course, if the "ingredients" are bad, the resulting "meal"
+               will be bad too!
+               Always make sure that you clearly understood the given requirements and that
+               you analysed them correctly when defining the problem!
+       An Example of Problem: Face Detection
+
+Requirements:                                            Tools and Method:
+We need to tell if there is a person in front of a       Right now we just defined the structure of the
+webcam or not                                            problem and how we would like to structure our
+                                                         solution (agent) but we did not agree on what to use to
+                                                         implement the problem and solution on a machine
+Problem:                                                 Which programming language(s) do we want to use?
+Performance measure = Accuracy in detecting faces
+                                                         Which data structures are we going to use to model
+in an image
+                                                         the problem and solution?
+Environment = RGB images, let's say 320 x 240 pixels
+                                                         Which architecture(s) are we going to implement our
+Actuators = A text-based terminal to communicate the     solution on?
+outcome of the detection
+                                                         Which models and algorithms are we going to use to
+Sensors = A camera                                       implement the solution? Edge detection? Artificial
+                                                         Neural Networks? Deep Convolutional Networks? ...
+
+Solution:
+Goal-based or Utility-based agent with the goal of
+determining if there is a face or not in the presented
+image (let's forget about the face location for now)
+              The real world is very complex!
+              We need to find a way to model the world in a simpler way to reduce
+              its complexity (and find viable solutions). This can be achieved
+              through an abstraction process.
+
+
+              The abstract representation must be less
+              complex than the original representation
+Abstraction   We need a way to abstract states and actions so that we can reduce
+              the complexity of the problem and find a solution more efficiently
+
+
+              The abstraction process is not a hard
+              science
+              A mix of creativity and technical skills
+              Iterative process, trial and error
+        Face Detection... again
+
+In how many possible states can we end up?
+
+We considered 320 x 240 RGB images
+
+Each pixel encodes three values (R, G, B) and each colour
+channel is encoded as a number between 0 and 255
+
+So, each colour channel encodes 2^8 possible values and
+each pixel can assume (2^8)^3 possible values: 16 777 216
+possible colours
+
+If we want to compute all the possible combinations of
+colours for each pixel that can generate an image we will
+end up with 16777216^(320*240) ... a figure exceeding the
+number of atoms in the observable universe!
+          A non viable abstraction
+
+
+States: each possible image that we can
+generate in a 320x240 RGB frame
+
+Actions: 1 if there is a face, 0 if there is not
+
+Tools and method: an hash table mapping each
+state to an action
+
+Hash table size: 16777216^(320*240) bits: we
+do not such large memory!
+...and it's impossible to enumerate all the states in the first place
+            A more viable abstraction
+   States: modelled as the domain of a mathematical function
+
+
+
+xij is a single pixel colour normalised between 0 and 1, y is a likelihood of a face
+being in the image
+
+
+   Actions: "Yes" if y > threshold, "No" otherwise
+
+   Tools and method: Matrix and/or tensors to represent
+   images computationally, Artificial Neural Networks and
+   Machine Learning algorithms to train the model with
+   sample images
+   The complexity can be further simplified if we reduce the dimensionality of
+   the input image (e.g. with PCA or other more advanced techniques for
+   features extraction)
+            Sometimes, tools and methods are already
+            available for a given set of problems sharing
+            some similarities in their structures
+              Is there already a solution for the identified problem?
+              Can I apply this solution directly to my problem?
+Do not        If not, is there a way that I can adapt my problem so to use an
+              existing solution?
+Re-invent
+the Wheel   Valid solutions may not be viable
+            There might be theoretical solutions that are not practically viable
+            And some solution may not good enough: "Is this solution good
+            enough for the considered scenario/application?"
+            Finally, licenses may limit the use of some solutions as well: "Can the
+            solution be used under a legal standpoint given the considered use
+            case?"
+Problem-Solving Agents
+                           1   State space
+                               A set of the possible states the environment can be in
+
+
+                           2   The initial state
+                               The state from where the agent will start its search
+The                        3   Goal state(s)
+Structure of                   A set of states in where the agent achieved its goal(s)
+
+
+a Search                   4   Available actions
+Problem
+                               The set of possible actions the agent can perform
+
+
+For now we will focus on
+                           5   Transition model
+                               It describes the result of performing a given action a in a given state s: Result(s, a)
+search problems...
+                               Example: Result(TeaInTheCup, DropTheCup) => snew = TeaOnTheFloor
+
+
+                           6   An action cost function
+                               A function attributing a cost of performing an action a in a state s to reach state s'
+                               The cost function should aligns to the performance measure of the agent
+                        Consider a set of possible action sequences
+                        Each action in each sequence will lead to some new state:
+                        snew = Result(scurrent, aselected)
+                        After performing all the actions in the sequence, we will reach a final
+                        state
+
+
+Problem-                Find a sequence of actions that will lead the
+                        agent to reach the desired final state (goal)
+Solving                 Note: a problem-solving agent must have a goal (goal-based agent)
+
+Agents                  This computational process of "finding" the
+(for search problems)
+                        correct sequence of actions leading to the goal
+                        state is called search
+
+                        A problem-solving agent performs a search to
+                        find the sequence of actions that can lead it to
+                        reach the desired goal state
+                          Goal formulation
+                  In this phase, the goal states are identified
+                        "What is the desired outcome I want to achieve?"
+                        "How would the world look like when I reached my goal?"
+
+
+                          Problem formulation
+                  In this phase, we provide an abstract model of the parts of the world relevant to reach the
+                  desired goal(s)
+                        "What are the variables and constraints that define the problem?"
+Problem-Solving         "What are the specific obstacles or challenges I need to overcome to reach my
+                        goal?"
+Process                 "How do we represent the problem computationally?"
+
+
+                          Search
+                  This phase represents the computational process of finding a sequence of actions leading to
+                  the desired goal state
+                        "What are the possible actions or steps I can take to progress towards my goal?"
+                        "How can I explore and evaluate different options to find the best solution?"
+
+
+                          Execution
+                  During this final phase, the agent performs the identified sequence of actions, one at a time
+ In a fully observable, deterministic, known environment,
+the solution to any problem is a fixed sequence of actions
+     We already know what is going to happen at any step with absolute certainty
+     That does not mean that we cannot use search algorithms
+     for partially observable or non-deterministic environments
+In these cases, the solution would be a branching strategy recommending different future actions
+                                  based on the current percepts
+
+                 "What's the contingency plan if something goes unexpectedly?"
+                        Deterministic, fully observable → Single-state
+                        problem
+                          The agent knows exactly where it is and where it will be given an action
+                          The solution is a sequence of actions
+
+
+                        Non-deterministic and/or partially
+                        observable → Contingency problem
+Classification            The agent has some knowledge of what could happen when a given
+                          action is taken or about the state is in, but without absolute certainty
+of Problems               The solution is a branching strategy
+
+As a brief summary...
+                        Non-observable → Sensorless problem
+                          The agent must makes decisions without direct access to sensors or
+                          complete information about the current state
+
+
+                        Unknown state space → Exploration problem
+                        The agent does not have information about the environment and its states
+                        and the only way to find out this information is to explore it and gather
+                        information via experience
+Search Strategies
+             Input: A search problem
+
+             Output: A solution for that search problem as
+             a sequence of actions
+Search       (or an indication of failure if no solutions were found)
+
+Algorithms   A sequence of actions forms a path
+
+             Hence, the solution of a search problem is a
+             path from the initial state to a goal state
+but before having "fun" with search algorithms,
+    let's review some useful data structures
+                                                           Graphs
+
+A graph G can be defined as a pair (V, E)
+
+V is the set of vertices (nodes)
+
+E is the set of Edges (links between nodes)
+E   ⊆ { (x, y) | (x, y) ∈ V2 }
+dense graph: |E| ≈ |V|2
+
+sparse graph: |E| ≈ |V|
+
+Undirected graphs:               ∀(u, v) ∈ E, (u, v) = (v, u)
+Directed graphs: if we have an edge (u, v) this is not the same of
+the edge (v, u)
+We have a direction from node to node: (u, v) notated as u → v
+
+Weighted graph
+Edges or vertices are associated with a weight
+                                                   Trees
+
+
+A specialised type of graph
+Search problems defined on Trees are easier to solve
+
+A graph T is a tree if T is connected and has no
+cycles
+Connected = for all pairs of nodes, there is a path connecting them
+No cycles = there are no loops in the graph (including self-loops)
+
+If T is disconnected than we have a forest
+Forest = A set of tree structures, still a graph
+             If u, v unique vertices in T, then there is a
+             unique path connecting them
+             because there are no cycles!
+Basic
+             The number of edges is equal to the number
+Properties   of vertices - 1 (sparse graph)
+of Trees     |E| = |V| - 1
+
+
+             These properties are useful to implement
+             efficient search algorithms
+               We can use an adjacency matrix
+               Let's consider an adjacency matrix A, then:
+               The size of A is |V| x |V|
+               Aij = 1 if (i, j)   ∈ E, 0 otherwise
+               For weighted graphs we can have the weight instead of simply the
+               value 1
+Representing
+               Space complexity
+graphs (1)     O(|V|2)
+               Dense representation but it can be efficient for small graphs
+
+
+               Undirected graphs will only make use of one
+               diagonal half of the matrix
+               The required memory can be reduced to a half
+               We can also use an adjacency list
+               Let's consider an adjacency list L, then:
+               The size of the list is |V|
+Representing   Li = {u   ∈ V | (i, u) ∈ E}
+graphs (2)     Space complexity
+               O(|V| + |E|)
+               Sparse representation
+                  Shortest path problems
+                      Find the shortest path from node a to node b
+                      E.g. robot navigation
+
+                  Network flow problems
+                      Optimise resource flow through a network of nodes and edges with capacity constraints
+                      E.g. transportation of goods and material constrained by costs, time and other
+                      constraints
+
+                  Matching problems
+
+Problem Solving
+                      Find the optimal pairing or assignment between entities based on preferences and
+                      constraints
+                      E.g. assigning all students to a room of the university dormitory based on their
+with Graphs           preferences
+
+                  Graph colouring problems
+                      Assign the minimum number of colours to nodes in a graph such that no adjacent nodes
+                      share the same colour
+                      E.g. scheduling a set of classes in various rooms throughout the week with no two
+                      classes scheduled in the same room
+
+                  Traveling Salesman Problems (TSP)
+                      Find the shortest possible route that visits a set of cities exactly once and returns to the
+                      starting city
+                      E.g. delivery of good to all customers without re-visiting a previous location
+             We can represent each state of the considered
+             state space as a node of the graph
+
+             We can represent each action available from a
+             state as an edge connecting a node to another
+             node (i.e. defining a transition)
+Back to
+             We can build a tree on the graph structure:
+Search        The root of the tree will be the initial state of the problem
+
+Algorithms    We can then expand the node by considering all the actions available
+              from that state and connect it to the next states using the function
+              Result(s, a)
+              The newly generated states are the child nodes (or successors),
+              whereas the previous state is the parent node
+              We then continue to generate child nodes from each newly generated
+              state
+              If the state space is a graph, we may visit the same state multiple
+              times
+From graphs to trees
+                          1   We start from the initial state
+                          2   We expand the node based on the
+                              available actions from the current state
+
+The Essence               3   We then choose one of the child nodes
+                              according to a strategy
+of Search
+Algorithms                4   We repeat from point 2 until we visit a goal
+                              state (success) or there are no more
+                              candidates for an expansion (failure)
+
+
+      If there are cycles in the graph, we may end up looping forever
+     without ending in any goal state!... unless we are smart about that
+                                       Search Strategies
+
+A search strategy is defined by                                 Complexity:
+picking the order of node expansion                             If we have an explicit graph structure of the problem,
+                                                                measured in terms of |V| and |E|, but if we don't:
+(i.e. our "strategy")                                           b - maximum branching factor of the search tree: How many
+                                                                new branches can we generate at each step? (Number of
+Relevant criteria for search                                    actions for a given state)
+                                                                d - depth of the least-cost solution: How many actions do
+algorithms:                                                     we expect to perform before reaching an optimal goal
+ Completeness: Is it always possible to find a solution if it   state?
+ exist and get a failure otherwise?                             m - maximum depth of the state space: What's the max
+ Time complexity: Given the graph's complexity, how long        number of actions in any path? ... it may be infinite (e.g.
+ will it take to find a solution?                               when we have loops)
+ Space complexity: Given the graph's complexity, how
+ much memory will we need to perform the search?
+                                                                Cycles
+ Cost Optimality: Does it always find the least-cost
+ solution?                                                      If we have cycles in the graph, we may end up exploring
+                                                                previously reached states (repeated state) and this may
+                                                                lead to generate redundant paths
+                                                                If a search algorithm checks for redundant paths, we call it
+                                                                graph search, if it does not we call it tree-like search
+            We can use a data structure (e.g. a class) to keep track of the
+            information about each node expanded during the search
+
+            node.STATE
+            We record information about the state to which the node corresponds
+
+
+            node.PARENT
+
+Modelling
+            We record a reference to the node in the search tree that generated this node
+
+
+            node.ACTION
+Nodes       We record the action that was applied to the parent's node to generate this node
+
+
+
+during a    node.PATH-COST
+            The total cost of the path from the initial state node to this node
+
+Search      Also notated as the function g(node) in mathematical notation
+
+
+            If we follow the pointers from each PARENT node starting from
+            the found goal state, we can record the path from the initial state
+            to the goal state, i.e. we retrieve the solution for the search
+            problem
+
+            Nodes can be added to queue data structures while performing
+            the search (more on this during the practical tutorials)
+Uninformed Search Strategies
+       Uninformed search strategies:
+When the search strategy uses only information
+    available from the problem definition
+                                Breadth-first search
+
+
+
+
+Starts the search from the initial node and it expands it with its children
+
+Then all children of the expanded node are expanded with their new children
+
+Then their children ... and so on
+Essentially, we explore the graph as a tree expanding the nodes on the horizontal plane (breadth of the tree)
+
+This search is an appropriate choice when all actions have the same cost
+             Implementation of Breadth-first search
+
+
+We can use a FIFO queue structure
+  New nodes will go to the back of the queue
+  (because always deeper than their parents)
+  Old nodes will move to the front of the queue
+  (because shallower than the new nodes)
+
+As soon as we reach a goal state, we
+are sure we found the best solution
+(i.e. shorter path)
+The solution of this search leads to the minimal
+number of actions required to reach the goal state
+
+Memory intensive search
+Space complexity is O(bd)
+      Uniform-cost search (Dijkstra's algorithm)
+
+
+Starts the search from the initial node
+and it expands it with its children
+
+The child leading to a lower cost is
+expanded next, leading to new
+successors nodes
+
+The costs for each path to the nodes
+in the frontiers is evaluated and the
+node leading to the lower path cost is
+expanded next, we then repeat this
+process until the goal state is found
+(after its expansion)
+
+This search is an appropriate choice
+when actions have different costs
+Implementation of uniform-cost search
+
+  We can use a priority queue structure
+  The nodes in the queue are ordered by their path cost
+
+
+  If step costs are all equal, the process
+  resembles the breadth-first search
+
+  In the worst case scenario, complexity higher
+  than breadth-first search
+  An action with higher cost may lead to the goal sooner than a set of low
+  costs actions
+
+
+  This search is complete and cost-optimal
+                        Depth-first search
+
+Starts the search from the initial
+node and it expands it with its
+children
+
+Then we expand the deepest
+node in the frontier first
+
+We continue to expand the
+deepest node in the frontier until
+we reach a goal state
+Essentially, we explore the
+graph as a tree expanding the
+nodes on the vertical plane
+(depth of the tree)
+Implementation of depth-first search
+
+ We can use a LIFO queue structure
+   New nodes will go to the front of the queue
+   Old nodes will go to the back of the queue
+
+
+ For finite tree-shaped state spaces, the complexity is
+ much smaller than the breadth-first search
+ Space complexity: O(bm)
+ Time complexity: proportional to the number of states
+
+
+ This search is not cost-optimal
+
+ For finite state spaces that are tree it is efficient and
+ complete
+
+ For cyclic state spaces it may get stuck in an infinite
+ loop!
+             Depth-limited search
+
+A variation of the depth-first search
+
+We limit the depth of the search to a depth limit L
+All nodes at depth level L are treated as if they do not have successors
+
+It can be useful when the state space size is unknown
+or there are constraints suggesting the usefulness of a
+solution based on depth
+But a poor selection of the parameter L may lead to a failure, making this
+search not complete
+
+Complexity:
+Space complexity: O(bL)
+Time complexity: O(bL)
+        Iterative deepening search
+
+Used in conjunction to the depth-limited search to
+identify a good value for L
+
+It iteratively run the depth-limited search with an
+incremental value for the parameter L until a solution is
+found or the search returns a failure
+First L = 0
+Then L = 1
+Then L = 2
+...
+
+Complexity:
+Space complexity: O(bd) when there is a solution or O(bm) when there is not
+Time complexity: O(bd) when there is a solution or O(bm) otherwise
+              Bidirectional search
+
+
+The idea is to run two simultaneous searches hoping
+that they will meet mid-way
+
+One search starts from the initial state to the goal state
+
+The other search starts backwards from the goal state
+to the initial state
+
+Complexity:
+Space complexity: O(bd/2)
+Time complexity: O(bd/2)
+Uninformed Searches Summary
+Informed Search Strategies
+             When we are talking about informed
+             searches, we are talking about heuristics
+
+             From the Greek "heuriskein" - to discover
+
+             Process of gaining knowledge or achieving
+Heuristics   some desired result by a rule of thumb or by
+             using a practical approach.
+
+             Heuristics does not guarantee an optimal
+             solution but they provide reasonable and
+             efficient solutions in many cases
+A "Squid games" dilemma
+ You wake up in a room with three doors
+ and limited information, you need to find
+ the exit and avoid danger
+
+ Door on the left: you hear a "roar"
+
+ Door in the middle: you hear sound
+ resembling rainfall
+
+ Door on the right: you smell smoke
+
+ Which door would you pick? Would you
+ be sure that the chosen door takes to the
+ exit?
+
+ There is no "theorem" proving that your
+ choice is optimal. Relying solely on initial
+ assumptions can be misleading
+                 We can define an heuristic mathematically as a function:
+
+
+
+
+               Where:
+
+
+Heuristic as
+a Function
+
+
+
+                 Note: we do not have certain information about the actual
+                 cost of visiting node n, just a guess!
+             We have some rule of thumb that can help us
+             reducing the complexity of the search space
+             For example, a robot waiter can perform hundreds of actions. However, for a
+             specific task, we know that the only possible actions are limited to a few. We can
+             proceed with only considering those actions.
+             What if something unexpected happens?
+
+
+When         The problem is so complex that requires some
+             simplifications
+Heuristics   For example, to simplify our face detection algorithm we may consider that a
+             face has two eyes, a nose and a mouth, and try to look for these elements
+can be       instead of looking for the face as a whole
+             What if the mouth is occluded?
+
+useful       We have / know constraints about the problem
+             These constraints can help us determining heuristics
+             For example, a visitor on a wheel chair at the hospital will have only a few paths
+             to choose from to reach a desired destination
+
+
+             There is a level of uncertainty
+             Heuristics may assist the agent's decisions... like in the previous dilemma
+             When we have a problem where we can
+             compute the solution
+             For example, we have an algorithm or a mathematical formula that is
+             proven to find a solution for the considered problem and we can use
+             this algorithm/formula (i.e. there are no space/time complexity issues
+             to use it)
+
+When it's    When we have a problem that can be
+best NOT     numerically solved
+to use       This is different from the point above
+             Numerical methods involve approximating solutions by performing
+Heuristics   calculations and manipulating numerical data. There is no exact
+             formula to compute the exact solution to the problem.
+
+
+             When a complex non-deterministic problem
+             can be approximated with intelligent
+             sampling techniques
+             For example, by using particle filtering techniques
+         Greedy best-first search
+
+We have a search problem and the heuristic
+function h(n) for each node of the state space
+Remember that h(n) is the estimated cost to reach the goal if visiting the
+state in n, so we want to minimise it.
+
+
+This algorithm is similar to the previous
+uninformed search algorithms
+  We start from expanding the initial state and add the children to the
+  frontier
+  We evaluate the heuristic h for each of the nodes in the frontier and
+  choose the node with lowest value of h(n)
+  We expand that node, add the children to the frontier and repeat the
+  process until we reach a goal state (or the search fails, i.e. no more
+  nodes to expand)
+         An Example
+Route-finding problem
+
+We can use the straight line
+distances as a heuristic function...
+
+...but for that we need to know the
+straight line distances
+
+In this example, the solution is not
+optimal
+The algorithm's "greediness" drives it closer and
+closer to a solution, but this eagerness can
+sometimes result in poorer outcomes compared
+to a more careful and considerate approach.
+                                    A* Search
+
+
+We still have our heuristic function h(n) but the overall evaluating function f to choose the
+next node to expand is more complex:
+
+
+
+
+Essentially a combination between the uniform cost-based search and the greedy best-
+first search
+
+A good choice for path-finding problems
+But good for other problems too
+           An Example
+This time when considering both the heuristic
+and the path cost, Sibiu becomes the best
+next choice for the A* search algorithm (b, c)
+
+However, Fagaras still results as a better
+choice than Pitesti, so Fagaras is expanded
+first (d)
+
+Bucharest appears in the frontier, but Pitesti
+appears as the best node to expand next, so
+Bucharest is not expanded yet (e)
+After expanding Pitesti we generate our
+destination Bucharest, which is also the best
+node to expand next, and a solution is finally
+found (f)
+                           Characteristics of A* search
+
+A* search is complete
+Assuming that all costs are > 0 and the state space is finite or has a solution
+
+It can be cost-optimal depending on certain properties of the heuristic function
+  Admissibility: the heuristic never overestimate the cost to reach the goal (optimistic heuristic)
+  An admissible heuristic is enough to ensure that the A* search will be cost-optimal
+  Consistency: a heuristic is consistent if for every node n, every successor n' of n generated by an action a we
+  have:
+
+
+
+
+  A consistent heuristic is also admissible. Thus, consistency is a stronger property than admissibility. However, the
+  vice-versa is not necessarily true.
+  With a consistent heuristic we guarantee that the first time we reach a state it will be on an optimal path. So it
+  saves space and time while performing the search.
+            The idea is the same of the A* search algorithm, however
+            this time we attribute a weight to the heuristic function:
+
+
+Weighted
+A* Search   We might lose the cost-optimality feature of the A* search
+            even if the heuristic function is admissible
+            Because we are multiplying it by a positive integer and we might
+            overestimate the cost (non-optimistic heuristic)
+                                             Summary (1)
+
+Problems and Solutions                                       Problem-Solving Agents
+ A problem is normally defined from a set of                  A problem-solving agent (in the context of search
+ requirements                                                 problems) is an agent searching for a sequence of
+ We can start to define our problem from the PEAS             actions that can lead it from an initial state to a goal
+ Task Environment description and we can then                 state
+ identify tools and methods to implement a solution to        A problem-solving agent must have a (set of) goal(s)
+ our problem                                                  Deterministic and fully observable environments
+ Representing a problem computationally requires a            define the class of single-state problems and they are
+ process of abstraction that can also assist to reduce        the easiest to solve with search strategies
+ the original real-world complexity of the problem            Non-deterministic and/or partially observable
+ When looking for solutions to a problem it is                environments lead to contingency problems
+ important to not re-invent the wheel. If there are           The class of sensorless problems is determined by
+ already viable solutions available for our problem, it is    unobservable environments
+ best to use them
+                                                              When the states of the environment has unknown
+                                                              nature, we happen to be in exploration problems
+                                     Summary (2)
+
+Search Strategies
+ A search strategy takes as input a search problem and returns a path from the initial state to the
+ goal state
+ A path is a sequence of actions the agent must perform to reach a desired state
+ A Graph is defined as a pair (V, E) with V being the set of vertices (or nodes) and E being the set of
+ edges between the vertices in V
+ A Tree is a special type of graph that is connected and has no cycles
+ When the graph is a set of disconnected trees, we have a forest
+ Graphs can be represented computationally with adjacency matrices or adjacency lists
+ Nodes in the graph are the states of the search problem
+ Edges of the graph are the actions the agent can take at each state
+                                     Summary (3)
+
+Uninformed Search Strategies
+ The breadth-first search strategy explores the search tree on a horizontal plane and it can be
+ implemented by using a FIFO queue data structure to store the nodes in the frontier
+ The uniform-cost search strategy can be implemented with the same set of steps as per the
+ breadth-first search strategy but the frontier is modelled as a priority queue with priority value
+ being the path cost for the added node
+ The depth-first search strategy explores the search tree on a vertical plane and it can be
+ implemented by using a LIFO queue data structure to store the nodes in the frontier
+ The depth-limited search is a variation of the depth-first search where we limit the depth of the
+ search to a depth level L. This search may not be complete even when the state tree is finite and
+ acycle
+ We can find an optimal value of L by using the iterative deepening search
+ The bidirectional search may be employed to cut in a half the time and space complexities
+                                     Summary (4)
+
+Informed Search Strategies
+ Informed search strategies make use of a heuristic function to estimate the cost of being in a state
+ when trying to reach a goal state
+ Heuristics do not ensure optimality and they may lead to sub-optimal solutions
+ The greedy best-first search strategy behave similarly to the uniform-cost search strategy but
+ instead of using the path cost as the priority value for the considered node, it uses the heuristic
+ cost as its priority value
+ The A* search strategy behave as a combination between the greedy best-first search and the
+ uniform-cost search by adding together the path cost and the heuristic cost as the priority value
+ for the considered node
+ The weighted A* search is a variation of the A* search strategy that attributes a positive weight to
+ the heuristic cost. By doing so, we lose the cost-optimality property of the A* search
+               Week 4: Games and Adversarial Search
+
+               Recommended Activities for Week 3
+                Review the lecture's material and Chapter 3 of the reference
+What's next?    textbook
+                Complete the workshop exercises for week 3
+                Start working towards a solution for Assignment 1. Do not wait until
+                it is too late
+                As always, if you have questions, please send me an email or post
+                them on the Unit's forum
+

@@ -1,0 +1,712 @@
+Week 1:
+Introduction to AI
+COSC350/550
+Artificial Intelligence
+                 Agenda
+
+
+
+
+1   Definition of AI
+
+2   History of AI
+Definition of AI
+What is Artificial Intelligence?
+Let's look at
+an example
+of AI...
+            Autonomous navigation
+
+            People perception
+
+            Speech synthesis
+
+What's in   Speech recognition and NLP
+there?      Objects recognition
+
+            Spatial awareness and reasoning
+
+            Face and people's features recognition
+
+            Human-Computer Interaction
+...but is AI just a fancy way of saying
+     "super-duper tech-y stuff"?
+So... what is AI?
+               Many studies and debates from different
+               fields trying to understand how we think
+                Psychology
+                Philosophy
+                Mathematics and Logic
+First, let's    Linguistics
+
+talk about      ....
+
+
+Human          No universally accepted definition of
+               intelligence
+Intelligence
+               Can be defined as the set of humans'
+               cognitive abilities to perceive, learn, reason,
+               understand, and make decisions based on
+               knowledge and experience
+AI is not only interested in understanding how we think...
+
+      ...but also how to build intelligent machines
+...but again, how intelligent?
+                                      The Turing Test
+
+
+
+
+Inspired from the imitation game, a game requiring a    In the modern version by Turing, the test requires a
+person to interact with other two individuals, a male   human evaluator to interact with both a human agent
+pretending to be a female and a female, and to          and a computer AI pretending to be a human, and
+determine who is the real female                        determine who is the machine
+ ok, but is this true intelligence?
+Sort of ... at least an aspect of intelligence, but there is a whole field in
+                   philosophy dealing with this question
+
+                                ... in fact ...
+The Chinese Room Argument
+
+         Thought experiment by John Searle
+          A room with a man inside answering questions in Chinese
+          The man does not know Chinese but he has a rule book with perfect
+          rules making him able to produce a correct answer in Chinese
+          (output) given any Chinese question (input)
+          The man performs this task so convincingly that the users thinks that
+          the man can actually understand them in Chinese
+          Does the man literally understand Chinese? Or is he just simulating
+          the ability to understand Chinese?
+
+
+         Strong AI vs Weak AI
+          Strong: Actual understanding, the machine has a mind
+          Weak: Just simulating, the machine does not have a mind
+          The Turing test only tests Weak AI
+
+
+         ChatGPT not so far from this "thought"
+         experiment
+                               Different angles of AI
+                               Leading to different research questions
+
+Philosophy                                Psychology                     Computer Engineering
+ Logic                                      Human thinking                Optimisation and control
+ Methods of reasoning                       Human behaviour               Robotics
+ Mind and brain                             Human learning                Automation
+ interactions
+ Knowledge and action
+                                          Neuroscience                   Economics
+                                            Brain structure               Utility Theory
+Mathematics                                 Brain functioning             Game Theory
+ Formal representation and
+                                            Brain / body interactions     Prediction of future payoff
+ proof
+ Computational Theory
+ Reasoning under
+                                          Linguistics
+ uncertainty (Probabilities)                Symbolic representations
+                                            of language
+                                            Knowledge representation
+                                            Language and thoughts
+              "what" vs "how"       Humanly            Rationally
+
+
+
+
+Different
+            Thoughts            Thinking Humanly   Thinking Rationally
+flavours
+of AI
+            Actions             Acting Humanly     Acting Rationally
+                Thinking Humanly
+
+Systems that think like humans
+ Requires scientific theories of internal activities of the brain
+
+
+AI is: “[The automation of] activities that we
+associate with human thinking, activities such
+as decision-making, problem solving,
+learning…” (Bellman, 1978)
+
+Goal: To build systems that function internally in
+some way similar to the human mind
+ Cognitive Science
+ Consciousness
+ Creativity
+                 Acting Humanly
+
+Systems that act like humans
+ Simulating intelligence, the Turing Test
+
+
+AI is: “The art of creating machines that perform
+functions that require intelligence when
+performed by people” (Kurzweil, 1990)
+
+Goal: To build systems that mimic human
+behaviour
+ Chatbots
+ Robots
+ Smart assistants
+             Thinking Rationally
+
+Systems that think in a rational way
+ Direct line through mathematics and philosophy to modern AI
+
+
+AI is: “The study of the computations that make
+it possible to perceive, reason, and act”
+(Winston, 1992)
+
+Goal: To build systems that can draw correct
+conclusions with deductions and logic inference
+ Logic
+ Knowledge representation
+ Formal reasoning
+                 Acting Rationally
+
+
+Systems that act in a rational way
+ Rational behaviour: doing the right thing, i.e. maximise goal-achievement
+
+
+AI is: “The branch of computer science that is
+concerned with the automation of intelligent
+behaviour” (Luger and Stubblefield, 1993)
+
+Goal: To build agents that can perceive and acts
+rationally
+ Intelligent agents
+ Focus on rational behaviour
+Artificial Intelligence and Sub-fields
+
+
+                   Artificial Intelligence
+
+
+                        Machine Learning
+
+
+
+                                Deep
+                               Learning
+
+
+
+        Data Science
+History of AI
+Imagining AI
+400BC - The Legend of Talos
+
+
+          The concept of intelligent machines is
+          not recent
+
+          Greek mythology: Talos
+           A gigantic animated bronze warrior programmed to guard
+           the island of Crete
+           Created by Hephaestus, the Greek god of inventions and
+           technology
+           Capable of deploying lethal force on invadors
+           Essentially a Robocop or Terminator of the past
+                           Automata of the Past
+A (semi) self-operating machine that can follow a sequence of operations or respond to pre-defined
+                                             instructions
+
+
+
+                                           Antikythera mechanism (1st century BC)
+                                             First analog computer designed to make astronomical
+                                             calculations
+
+                                           The Jaquet-Droz Automata (1770s)
+                                             Mechanical dolls performing basic tasks based on pre-
+                                             defined instructions, such as playing music, write a text or
+                                             draw pictures
+
+                                           The Maillardet's Draughtsman-writer (1800)
+                                             Complex automaton able to write poems in English and
+                                             French and to draw four sketches
+Early Sci-fi works
+
+
+
+
+      Frankenstein (Mary Shelley, 1818)
+       Again with the idea of creating an intelligent and sentient
+       creature
+
+
+      I, Robot (Isaac Asimov, 1940-1950)
+       Famous for the three laws of robotics
+Foundations of AI
+Propositional Logic
+
+      Aristotle (384BC - 322BC)
+
+      Earliest formal study of logic
+        The Organon, a collection of six works on logical analysis
+
+
+      Terms, propositions, syllogisms and
+      logical deduction
+
+      All men are mortal
+      Socrates is a man
+
+
+      Socrates is mortal
+Language, Mind and Reasoning
+
+            Gottfried Wilhelm Leibniz (1646 - 1716)
+
+            Connection between the form and
+            content of language and the operations
+            of the mind
+
+            Universal Language
+             Symbolic language, representing concepts and ideas with
+             logical rules for validation and manipulation
+             Foundation of First-Order Logic works
+
+
+          "All human ideas can be resolved into a
+          few as their primitives"
+Boolean Logic
+
+    George Boole (1815 - 1864)
+
+    Using Algebra to capture the essence
+    of Aristotelian logic
+      Forget the original meaning of the Algebraic symbols
+      Use mathematical manipulations to replicate Aristotle logical
+      deduction process
+
+
+    Boolean algebra manipulates symbols
+    without regard to their meaning
+    Logical problems can now be expressed as Boolean
+    statements, and, with its rules, mathematicians can derive
+    more general or detailed statements from the original ones
+Functions and Predicates
+
+          Gottlob Frege (1884 - 1925)
+
+          Formal notation for thought and reasoning
+            Inspired by Leibniz's Universal Language
+            Using functions to assign meaning to terms
+            Placeholders and functions used to introduce concepts
+
+
+          Predicate Calculus
+            Non-mathematical predicates represented through terms and
+            functions
+            More general processing of 'every' and 'some' logical quantifiers
+            Precursor of modern predicate calculus (First-Order Logic)
+
+
+       Logical proof as a finite sequence of statements that are either
+       axioms or follows from the inference of previous members of
+       the sequence
+Principia Mathematica
+
+
+       Russell and Whitehead (1910s)
+
+       Formal notation for thought and reasoning
+        Notation system (Principia notation) representing logical
+        statements and reasoning
+        Formal system for mathematics providing a foundation for AI
+        Defining limits and possibilities of AI systems
+
+
+       Knowledge representation and reasoning
+        Offering a framework to represent knowledge
+        Influencing later AI expert systems and decision-making
+        systems
+Limits of Logic
+
+    Kurt Gödel (1906 - 1978)
+     Challenging the notion of a fully comprehensive and consistent
+     logical system, highlighting the limits of logic within AI
+     research
+
+
+    Incompleteness theorems (1931)
+     There are mathematical statements that cannot be proven or
+     disproven within a formal logical system
+     Shattered the dream of crafting a totally infallible and
+     impeccable logical basis for AI!
+
+
+    Shift in focus towards alternative
+    approaches
+     Importance of uncertainty
+     Probabilistic reasoning
+     Machine Learning
+Limits of Intelligent Programs
+
+
+
+            Turing's Halting Problem (1930s)
+             The problem: create an algorithm to determine whether a
+             program will halt (terminate) or run indefinitely for a given
+             input
+             Proving that there is no solution to this problem
+
+
+            Challenging the concept of "True AI"
+             There exist undecidable problems
+             Not possible to achieve all-knowing all-powerful general AI
+The Birth of AI
+Pitts & McCulloch's Neuron
+
+          Mathematical model of artificial neural
+          networks (1943)
+           Considered the first real AI work
+           Exploring computational models inspired by the biology of
+           human neurons
+
+
+          Neural networks as computational
+          model capable of learning
+           Inspired subsequent research in the field of NN
+           (connectivism)
+           Setting the stage for advancements in machine learning and
+           pattern recognition
+           Early attempt, very limited capabilities (basic logic functions)
+The First Robotic Lab Rat
+
+         Minsky and Edmonds' SNARC (1950s)
+          Stochastic Neural Analog Reinforcement Calculator
+          Hardware-based system that aimed to simulate the
+          behaviour of neural networks using analog circuits
+          Using random fluctuations (noise) in electronic circuits to
+          emulate the stochastic nature of neural processes
+          Learning through strengthening the connections between
+          neurons based on the outcomes of previous trials
+
+
+         First real AI capabilities
+          SNARC demonstrated the feasibility of implementing neural
+          networks in physical hardware
+          Able to solve a maze, like a robotic lab rat, through a
+          process of trial and errors
+AI Learns How to Play Checkers
+
+            Arthur Samuel's Checkers-Playing
+            Program (late 1950s)
+             The program learns how to play checkers by playing
+             numerous games against itself
+             Employing a form of reinforcement learning: gradually
+             improving each time from successes and mistakes
+
+
+            One of the first successful attempts in
+            Machine Learning
+             Earliest instance of a machine demonstrating learning and
+             autonomous improvement in a competitive domain
+             Foundational work for future advancements in Machine
+             Learning
+AI is finally born!
+
+
+      Dartmouth Workshop (1956)
+       Organised by John McCarthy, Marvin Minsky, Nathaniel
+       Rochester, and Claude Shannon
+       Exploring machines exhibiting intelligent behaviour and
+       bringing together leading researchers in various fields
+
+
+      The term "Artificial Intelligence" was
+      coined
+       Term to describe the field of study dedicated to developing
+       intelligent machines that could perform tasks typically
+       requiring human intelligence
+The Golden Age of AI
+AI Proves Math Theorems
+
+        Simon & Newell's Logic Theorist (1956)
+         Early breakthrough in AI
+         Program able to prove mathematical theorems using symbolic logic
+         Employing heuristics and problem-solving techniques for logical
+         deductions
+
+
+        The General Problem Solver (late 1950s)
+         Further work by Simon & Newell for automated problem-solving
+         The program solved varied problems, including maths puzzles and
+         reasoning tasks
+         Showing that a programming language has necessary and sufficient
+         means to achieve general intelligence
+
+
+        Hype in rule-based systems
+         Paving the way for systems using rules and logical reasoning
+         Foundational work for expert systems
+A High-Level Programming Language for AI
+
+
+                 LISP (late 1950s)
+                  LISt Processing, a high-level programming language
+                  developed by John McCarthy
+                  Specifically designed for AI research
+                  The use of lists in LISP allowed for flexible and powerful
+                  operations such as recursion, symbolic processing, and
+                  dynamic memory allocation
+
+
+                 Impact on advancing AI research
+                  Enabling the development of early AI systems, expert
+                  systems, and rule-based reasoning
+The Perceptron
+
+
+    Rosenblatt's Perceptron (late 1950s)
+     Implementation of Pitts & McCulloch's work
+     A single layer of artificial neurons (perceptrons)
+     interconnected with adjustable weights
+     Weights used to learn and make decisions based on input
+     patterns, adjusting the weights through a learning algorithm
+     Work still actual today!
+
+
+    Limitations of the Perceptron
+     Only able to learn linearly separable patterns!
+Weizenbaum's Conversational AI
+
+            ELIZA (mid 1960s)
+               Groundbreaking conversational AI program
+               Program simulating a conversation between a user and an artificial
+               "psychotherapist" using natural language processing techniques
+               Using simple pattern-matching approach to engage users in
+               conversation and provide human-like responses
+
+            Just a trick
+               ELIZA was designed to mimic a Rogerian psychotherapist, asking
+               questions and reflecting user input back to them
+               This work demonstrated the power of natural language processing
+               and the potential for creating human-like interactions with computers
+               Weizenbaum's intention with ELIZA was to show the limitations of AI
+               and highlight the importance of human-human interaction
+
+
+          Raising first ethical and philosophical questions about the nature
+          of human-computer interactions and the boundaries of AI
+SHAKEY
+
+
+
+Rosen's Groundbreaking Robot (late 1960s)
+ First general-purpose robot
+ Designed to navigate and interact with its environment using
+ a combination of perception, planning, and action
+ SHAKEY's planning system utilised a combination of logical
+ reasoning and search algorithms to generate plans for
+ accomplishing tasks and achieving goals
+ it demonstrated the importance of real-time decision-making
+ and sensor-based perception in performing tasks in a
+ dynamic environment
+AI Winters
+           A lot of excitement around Expert Systems
+           and Automatic Theorem Proving Systems
+           but...
+
+
+           Knowledge matters
+             Without correct and comprehensive knowledge, performance are
+             poor
+Hype vs.     Beside the lack of knowledge, also the challenge of storing
+
+Reality
+             knowledge (at least in the past)
+             Lack of reasoning and learning capabilities to extend knowledge
+
+
+           Intractability of problems
+             Not only a matter of hardware limitations
+             Some problems have no efficient solution to solve them
+
+
+           Drying up of investments on Expert Systems
+               Minsky and Papert (1969) demonstrating the
+               limitations of the Perceptron model
+                Only able to learn linearly separable functions
+
+Abandoning      Reason due to the structure of the neural network with a single layer
+                No solutions on how to go around this limitation
+Connectivism
+               First death of connectivism
+                Researchers abandoning the idea of artificial neural networks
+                Funds removed from ANN research
+               Too high expectations
+                Promises made in the past were not delivered
+                Governments and other institutions stopped funding AI research
+
+
+               Lack of AI adoption
+Other Issues    Industry not able to fully understand AI
+                No significant use cases to show the value of AI for the industry
+                Broad scientific community skepticism about AI as a field
+
+
+               High Costs
+                AI research and development required a lot of money and resources
+                Cheaper (sub-optimal) solutions available
+New Hype
+                New Machine Learning techniques
+                 Support Vector Machines (1992 - 1997)
+                 Ensemble learning (e.g. AdaBoost, Gradient Boosting)
+
+
+                Resurgence of Artificial Neural Networks
+                 Solutions to previous problems with ANN
+                    Multilayer perceptrons
+
+New                 Convolutional Neural Networks
+                    Backpropagation algorithm
+
+Breakthroughs   Shift of focus from Symbolic AI to Statistical and
+in Machine      Probabilistic approaches
+Learning         Representation and reasoning under uncertainty
+                 Founding new applications in decision-making systems:
+                    Medical diagnosis
+                    Risk analysis
+
+
+                Advancements in Reinforcement Learning
+                 Q-Learning (model in 1989, proof of convergence in 1992)
+                 Game-Playing successes (especially when used in Deep Learning models)
+                 Real-world applications (robotics and autonomous systems)
+           Expert Systems
+            Despite their limitations, expert systems demonstrated practical
+            value in specific domains:
+               Medical diagnosis, Financial planning, Chemical analysis, Quality
+               control, ...
+            New Machine Learning techniques offering ways for expert systems
+            to learn and reason more efficiently
+            Integration with other AI techniques:
+Industry       Natural Language Processing, Computer Vision, and
+               Probabilistic Reasoning
+Adoption
+           Robotics
+            First robotics solutions for manufacturing tasks
+            Then evolved until our modern times with more sophisticated
+            machines
+
+
+           Information Retrieval Systems
+            Search engines and document indexing systems
+Big Data
+When Data is Everything...
+
+          Data Explosion
+           The advent of the internet, social media, IoT devices, and
+           various digital platforms has generated an enormous
+           amount of data
+           This data includes structured and unstructured information,
+           such as text, images, videos, sensor data, and user
+           interactions
+           The volume, velocity, and variety of data have increased
+           exponentially, giving rise to the term "Big Data."
+
+
+          A Data-Driven approach
+           Rather than focusing on offering models to solve specific
+           problems or generating complex and comprehensive KB on
+           a domain, we use general-purpose models and train them
+           with Big Data on the domain of interest
+...if you have the right techniques to learn from it
+
+
+                       The Vanishing Gradient problem
+                        Information decays through time
+                        The backpropagation algorithm used by ANN leads to the
+                        gradient to decay if the network is too deep (i.e. with many
+                        layers, or recurrent NN)
+                        A small gradient makes impossible to learn
+                        To train an ANN with Big Data many layers are required
+
+
+                       New advancements in ANN solved this
+                       issue
+                        Now possible to build very deep ANN to learn from big data
+Where are we now?
+
+      Synthetic images generation
+       DALL-E model able to generate realistic images from natural language descriptions
+       Generation of surroundings
+       AI generating human avatars
+
+      General purpose chatbots
+       ChatGPT model, able to respond to complex natural language queries with high
+       accuracy
+
+      Human-level accuracy Computer Vision
+       Object recognition
+       Scene recognition and description
+       Action recognition
+       ...
+
+      Other breakthrough technologies
+       Voice cloning
+       Machine translation and language models
+       Sentiment analysis
+       Music production
+       Autonomous vehicles
+       ...
+             Data quality
+               Garbage in, garbage out
+               Data cleanliness, inconsistencies, biases, and missing values
+
+             Privacy and Security
+               Data growth increases privacy/security worries
+               Preserving privacy while extracting useful insights from data is challenging
+               Laws and regulations
+
+             Bias and Fairness
+               Discriminatory decisions due to biases in training data
+New            Knowing too much about you and getting penalised for that
+               Predictions that may be accurate but still unrealised (e.g. insurance policies)
+Challenges   Scalability and Infrastructure
+               Storage, processing power, and network capabilities
+               Distributed systems, cloud computing, and optimised algorithms for efficient processing
+
+             Explainability
+               Black-box models
+               Too much or too less trust
+
+             Designing for humans
+               All of the above, plus
+               Human-Computer interaction design studies and experiments required
+                                                      Summary
+
+Definition of AI                                                  History of AI
+ Nowadays, AI is pervasive in many technologies, not only          Ancient legends and Sci-fi works inspired the creation of
+ complex ones but also more simple home appliances                 intelligent machines
+ Research on defining and investigating Human Intelligence         Foundational works on logic, language and reasoning paved
+ provided a direction for AI research and its definition           the way for the birth of AI
+ Defining intelligence is not easy and there are still debates     First early AI works include automatic theorem provers,
+ on what intelligence really is and if simulated intelligence      artificial neural networks, early robots, and algorithms able
+ can be considered true intelligence                               to learn from trial and errors
+ Artificial Intelligence draws from many disciplines, including    During its history, AI went through some hype periods
+ Math, Philosophy and Psychology                                   leading to significant investments and some winter periods
+ Artificial Intelligence includes the subfield of Machine          leading to the abandonment of inefficient techniques
+ Learning and this latter includes the Deep Learning subfield      Modern AI techniques builds on top of previous techniques
+                                                                   but mostly make use of big data and machine learning to
+                                                                   create intelligent agents
+                                                                   AI faces new obstacles due to large datasets and data
+                                                                   quality, as well as ethical concerns (privacy) and design
+                                                                   issues (positive user experience).
+               Week 2: Intelligent Agents
+
+               Recommended Activities for Week 1
+What's next?    Get familiar with the Unit website
+                Complete the workshop exercises for week 1 (for internal students
+                that can be made during the workshop's scheduled time)
+                Don't wait until it's too late! If something is unclear, add a post on
+                the forum or contact the Unit Coordinator
+

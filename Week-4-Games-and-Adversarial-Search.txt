@@ -1,0 +1,604 @@
+Week 4:
+Games and Adversarial Search
+COSC350/550
+Artificial Intelligence
+               Agenda
+
+
+
+
+1   Games
+
+2   Adversarial Search Algorithms
+Games
+               So far we looked at solutions for problems
+               involving a single agent
+
+Competitive    But what if the problem involves multiple
+Environments   agents with conflicting goals?
+
+               There are search techniques that can be
+               used in this context: Adversarial Search
+        Simple games, like Chess, Checkers and
+        Go, are a good example where we can use
+        adversarial search algorithm
+
+        They often involves multiple players with
+        conflicting goals
+Games
+        They are restricted by a set of clearly defined
+        rules
+
+        And, most of the times, the state of the
+        game is easy to represent
+              Under the context of adversarial search, a game can be more
+              generally considered a problem having:
+
+               1   Players: two or more agents participating in the
+                   game
+
+Not            2   Moves: the actions or decisions that each player
+                   can take during their turn
+necessarily
+a game of      3   Rules: constraints determining when an action is
+                   legal in a particular state of the game and the
+Chess              resulting state transitions
+               4   A Game State: the current configuration of the
+                   game, including the position of pieces (state)
+               5   An Objective: a desired goal that players must
+                   achieve competitively
+           We consider a specific class of games mostly
+           studied in AI because usually simple to address
+           with AI techniques. Games that are:
+
+           Deterministic
+           Games without an element of chance
+
+
+A Simple   Two-players
+           We have exactly two competing agents
+Class of
+           Turn-taking
+Games      The game is played in turns
+
+
+           Perfect-information
+           The state of the environment is fully observable
+
+
+           Zero-sum
+           What is good for one player is just as bad for the other. No "win-win"
+           outcome.
+                                       Modelling a Game
+
+Players
+ We name the two players as MAX and MIN (only two players for now, but the offered techniques can be easily extended to
+ more players)
+ MAX will move first, than the two players will take turns until the game is over
+
+Game elements:
+           The state space graph is defined by the initial
+           state S0, the ACTIONS function and the RESULT
+           function
+
+           We superimpose a search tree on the state space
+           graph like for the classic search algorithms
+Treating
+           We define the complete game tree as a search tree
+Games as   that follows every sequence of moves from a given
+Search     state all the way down to a terminal state
+           The game tree may be infinite if the space state is unbounded or if the rules
+Problems   of the game allows infinitely repeating positions
+
+
+           When at a terminal state we can retrieve a payoff
+           for each player via the function PAYOFF
+
+           The player's objective is to find the next move that
+           can lead to the highest payoff for them
+Tic tac toe
+Adversarial Search
+   Algorithms
+From where do we start?
+              The search should determine the optimal decision
+              for a player at a given state so to maximise its
+              chances of winning against the other player
+
+              Let's consider MAX being the player for which we
+              want to determine the best move
+
+              MAX can look at all the possible moves available in
+Finding the   the current state and go down the game tree by
+              considering the responses of MIN to its moves
+best move
+              The strategy MAX is looking for is a conditional
+              plan: if I do A, MIN will likely do B, so I will do C,
+              and MIN will probably respond with D, ....
+
+              We are not sure that MIN will respond as
+              predicted... but we can consider the worst case
+              scenario for MAX and re-evaluate the strategy at
+              each turn, if necessary
+                      Minimax Search
+
+Minimax can be used to determine the optimal move
+for games with multiple outcome scores
+
+MINIMAX(s, p) is a function returning the utility for
+player p to be in state s, assuming that both MAX and
+MIN play optimally from there to the end of the game
+In other words, this search answer the question: "how well placed is player p against
+its opponent when p is in state s if the opponent will always respond optimally from
+there?"
+
+
+Utility of a state (for player p)
+Terminal states: the utility is simply the payoff assigned to that terminal state for player
+p
+Non-terminal states: player p prefers to move to a state with maximum expected value
+for player p when in their turn, whereas the opponent prefers to move to a state of
+minimum expected value for player p when in their turn. We continue to go down the
+tree by following these policies until a terminal state is reached (and consequently a
+payoff for player p)
+Minimax
+Implementation
+                                                 Example
+
+MAX is X, MIN is O
+
+Three remaining possible moves from the current
+state s of the game
+
+If MAX plays the left move at state s, two more
+branches available: one leading to MAX loosing
+(-1), the other leading to a tie (0). The worse case
+scenario is that MAX will lose (-1)
+
+If MAX plays the middle move at state s, it can
+terminate in a win for MAX (+1) but also terminate
+in a tie (0). The worse case scenario is a tie (0)
+
+If MAX plays the right move at state s, MAX will
+win (+1). That's the only possible outcome.
+
+Considering an optimal opponent MIN, the best
+move is the one on the right, leading MAX to
+immediately win during the next turn
+              Minimax Complexity
+
+Minimax search performs a complete depth-first
+search of the game tree
+
+Complexity:
+Given m being the depth of the tree and b the number of legal moves at each
+point,
+Time complexity: O(bm)
+Space complexity: O(bm)
+The depth of the tree are the expected number of plies from the initial state to
+a terminal state
+
+
+The exponential time complexity makes Minimax
+impractical for complex games
+E.g. chess has a branching factor (b) of 35 and an average game depth (m) of
+80 moves: 3580 is approximately 10123!
+                                                      Alpha-Beta Pruning
+
+Sometimes it is possible to cut the exponent of minimax
+complexity in a half by pruning parts of the game tree that make
+no difference to the outcome
+
+General idea of alpha-beta pruning:
+ Consider a node n in the game tree such that the player has a choice of moving to n
+ If the player has a better choice either at the same level (e.g. m') or at any point higher up in the tree
+ (e.g. m), then the player will never move to n and we can prune it
+
+
+Alpha is our upper-bound value. It is the best value that the
+maximiser (player p) currently can guarantee at that level or above
+(so it is the maximum encountered MINIMAX value so far)
+
+Beta is our lower-bound value. It is the best value that the
+minimiser (the opponent) currently can guarantee at that level or
+above (so it is the minimum encountered MINIMAX value so far).
+
+If the MINIMAX value is higher than beta during the maximisation
+phase or lower than alpha during the minimisation phase, then we
+can prune the current branch (i.e. exit recursion in advance with
+the current MINIMAX value)
+Alpha-beta
+pruning
+Implementation
+
+
+
+
+                 alpha: payoff value of the best choice we found so far for p, beta: payoff value of the worst choice we found so far p
+Alpha-beta
+pruning
+Implementation
+
+
+
+
+                 alpha: payoff value of the best choice we found so far for p, beta: payoff value of the worst choice we found so far p
+               Similarly to the depth-first search algorithm,
+               we can easily modify the MINIMAX algorithm
+               by limiting the depth of the search
+
+               Given a parameter L
+Limiting the    We terminate the search on the current branch if the current state is
+                terminal OR If we reached the maximum depth L
+depth of the    In the recursive call of MINIMAX, the value for the parameter L will
+                be L - 1, so we can terminate early when L <= 0
+MINIMAX
+search         Two issues with this approach:
+                We may terminate the search too early and the benefits of a move
+                may become apparent only later on during the game (after L plies)
+                By terminating the search in a non terminal state, the only way to
+                return a MINIMAX value is via the use of a heuristic function that can
+                estimate the payoff given the current non-terminal state
+                As we know, heuristic functions may over or under estimate the
+                costs/payoffs
+          Even with alpha-beta pruning or by limiting
+          the maximum depth, minimax can still be a
+          non viable option for complex games with
+          high branching factors
+Complex   We could use heuristics to estimate the
+Games     future payoff given the current state and
+          prune more branches, but sometimes this is
+          not possible (e.g. Go)
+
+          How can we approach these complex
+          games?
+              A depth-first search leads to exponential
+              complexity but a single play of the game has only
+              linear complexity
+              Time complexity for a single playout of the game is O(m)
+
+
+              We can play many simulated games from the
+              current state and see how they go
+Using           For each possible move from the current state we check the percentage of
+                times we won if performing this move (or we consider any other useful
+
+Simulations
+                metric)
+                We choose the move leading to the higher simulated utility
+                Essentially, we are running an experiment (search) using many
+                participants (playouts) to draw conclusions (best move)
+
+
+              An approach using simulations to choose the best
+              next action is called a Monte Carlo method
+              The name comes from the Monte Carlo Casino, meaning that we "roll the
+              dice" many times until we can estimate probabilities from the frequencies of
+              the outcomes
+but, how many playouts do we need?
+
+And how do we simulate the behaviour
+ of the players during each playout?
+                We can run N simulations of the game
+                (playouts) starting from the current game
+                state with N large enough to converge to the
+                optimal solution
+                 "Large enough" depends on the complexity of the game, the higher
+
+Selecting the    is the game complexity the higher is the number of "samples" we
+                 need to converge
+
+number of        If we can assume a total of Q possible ways of playing the game
+                 from the considered initial state, we want N to be a non negligent
+
+playouts         number w.r.t. Q (statistically speaking)
+
+
+                OR, we set a maximum time for the
+                simulations and we run as many simulations
+                as possible during that maximum time
+                 We are not ensuring to converge to an optimal result but at least we
+                 are ensuring a sufficiently fast computational time at each ply
+          The easier policy to implement during a
+          simulated playout is a random policy
+           At each ply, the current player choses a legal move randomly until a
+           terminal state is reached
+           Doing this will answer the question: “what is the best move if both
+           players play randomly?”
+Playout    For some simple games, with N large enough that would also be the
+           answer to the question: “what is the best move if both players play
+policy     well?”
+
+
+          OR we can choose each player's move by
+          using a better policy
+           If we can model a policy for the game biasing the players to choose
+           towards a better move during each simulated round
+           This is not always possible, especially for complex games
+For now, let's just focus on
+selecting moves randomly
+           Monte Carlo Tree Search
+
+The Monte Carlo Tree Search (MCTS) algorithm offers a methodology
+build a search tree of the game, update it with wins and loses from
+the simulated playouts and iteratively select the best moves given the
+previous playouts. It does that in four phases:
+
+
+ 1    Selection
+ 2    Expansion
+ 3    Simulation
+ 4    Backpropagation
+            We traverse the currently generated search
+            tree from the root node R (the game state we
+            are in) until we find a leaf node L. A leaf node
+            is a node having potential successor nodes
+            that we never explored before (i.e. we never
+            generated a simulated playout reaching
+Selection   them)
+Phase       We choose how to traverse the tree based
+            on a selection policy. A selection policy
+            should choose which node to visit next (the
+            next move) based on metrics achieved so far
+            with previous playouts (e.g. the successor
+            node with achieved highest wins for player p
+            so far)
+            Given the selected leaf node L, we expand it
+Expansion   with its successors, adding the successor to
+Phase       the leaf node L if previously not expanded
+            yet
+             We run a simulated playout from the
+Simulation   selected leaf node L.
+Phase        The playout policy can be simply random, or
+             based on a more sophisticated heuristic.
+                  We gather the outcome from the terminal state and we
+                  backpropagate the result back from the selected node
+                  L to the root node R
+
+                  That means increasing the number of visits for each
+                  traversed node by 1 and increasing the number of wins
+                  or loses for player p by 1 for each traversed node
+
+                  At the end of the MCTS, the root node R will end up
+Backpropagation   with a list of successors, one for each possible legal
+Phase             move from the state in R
+
+                  We can determine the best successor based on the
+                  number of wins and number of visits of each successor
+                  node of R
+
+                  After determining the best successor, we can also
+                  access the ACTION that generated that successor
+                  node. Hence, we can access the best expected move
+                  from the state in R
+MCTS Algorithm
+                MCTS does not need an
+               evaluation/payoff function
+ We are always reaching a terminal state with a real winner or loser, so we can simply use this
+                  information to update the metrics of the traversed nodes
+
+This is an advantage w.r.t. MINIMAX search, especially with depth-limited searches employing a
+                      heuristic evaluation function for non-terminal states
+                   The selection policy will bias how we will traverse the search tree
+                   and, therefore, from which nodes we will likely perform the random
+                   playouts
+                   If we simply select nodes with higher winning rates, we are
+                   privileging the exploitation of high performing branches of the
+                   search tree. However, we may be missing some other good
+                   opportunities in other branches we really did not visit much yet.
+                   As part of our selection policy, we can also consider balancing the
+                   exploitation of high performing branches with the exploration of
+Exploitation vs.   branches that we did not visit much so far
+Exploration        Upper Confidence Bound 1 (UCT):
+           For some games, the problem complexity can
+           be quite high
+            In a game of Chess we use a game board of size 8x8
+            Each player starts with 16 pieces
+            There are 6 types of pieces, each one with different movements
+            allowed
+            The branching factor is very high and so the average number of plies
+
+Highly
+            before reaching a terminal state
+
+
+Complex    Running Monte Carlo Simulations may not help
+           much
+Problems    A playout from the current node may still require many moves before
+            reaching a final state, i.e. the depth m may be high
+            The number of distinct playouts achievable from the current node may
+            be very high
+            A good sample size N representative of the achievable playouts may
+            be high
+            O(Nm) is still linear but it can grow to a time that is no more efficient
+            for real time plays
+            Using a sample size << N may lead to suboptimal results
+... what can we do?
+             Known winning strategies
+              If there are known techniques or strategies that a player can
+              perform to get an advantage on the opponent, we can hard-code
+              these heuristics when selecting the best next move for the player
+
+
+             Ordering the legal moves
+Heuristics    If we have a heuristic function that we can use to evaluate the
+              goodness of a move for a given game state, we can sort the legal
+              moves based on this heuristic function first when considering them
+              during a MINIMAX search
+              In fact, the alpha-beta pruning algorithm is more effective when
+              more advantageous rules are tested first. That's because by
+              considering more effective moves first will lead to encounter higher
+              values for alpha and lower values for beta during earlier iterations,
+              thus pruning suboptimal branches in advance.
+              Transposition tables
+               For each state we already encountered during a search, we can
+               save when we encountered it (depth), the utility of that state (e.g. the
+               MINIMAX value for that state) and other information that may speed
+               up computations (e.g. the alpha and beta values for that state)
+               Every time we traverse a state, we first check if that state was
+               already visited and added to the transposition table. If so, we may
+               simply re-use the stored values instead of executing the search
+               again from this state
+Caching        Transposition tables are updated online, i.e. during the game
+
+Information    playouts
+
+
+              Opening books
+               Opening books are generated offline, i.e. before making the game
+               available to the players
+               We consider all the possible opening states of the game
+               For each opening state, we run a deep search making use of a
+               transposition table. This process may take quite some time.
+               The final transposition table is then saved for later use
+                Idea:
+                 We start with an empty table (or dictionary or hashtable)
+                 Every time we need to perform a search (either with MINIMAX or
+                 MCTS) we will have a starting node from where to start the search.
+                 Hence, we can check if that node was already stored in the
+                 transposition table. If so, we simply re-use the previously obtained
+                 outputs, if not, we run the search and save the outputs in the table
+                 together with the information about the starting node.
+
+Transposition   Problem:
+Tables           We will likely run thousands (if not millions) of MINIMAX / MCTS
+                 searches over time (either offline with opening books or online while
+                 playing and updating the transposition table)
+                 Every search means storing information about the starting node
+                 A node encapsulate the game state
+                 For complex games, a game state may store a lot of information and
+                 require a lot of memory
+                 The transposition table will likely become too big and now instead of
+                 a problematic time complexity we end up in a problematic space
+                 complexity!!!!
+          Solution: We find a smart and general way to
+          compress the game state
+
+          Zobrist table:
+           We identify the key elements representing a game state. These can be the
+           players, the game board, the content of each cell of the game board, etc.
+           For each possible value of these key elements, we generate a big random
+           number (let's say between 0 and 2^64)
+
+Zobrist    We store these key elements and their random identifier in a table (Zobrist
+           table)
+
+Hashing   Zobrist hash:
+           We take the game state we need to store in the transposition table
+           We identify the key elements that are in the current game state and their
+           current values
+           We start from the hash being 0
+           We then XOR it with every random identifier or every key elements in the
+           current game state
+           This XOR process will generate a final number that will be our hashing
+           representing the current game state
+                                               Example
+
+Tic Tac Toe:                                             Zobrist elements:
+ We have two players, X and O                             turn-X = 14834675960217676050
+ We have a game board 3x3, in each cell we can            turn-Y = 7475836909966603665
+ have X, O or None                                        gb-0-0-X = 16553800896814140684, gb-0-1-X
+ At each ply, it is the turn of one of the two players    = 2871772962934059730, ...., gb-2-2-X
+                                                          = 7223067341729483349
+                                                          gb-0-0-O = 1340683675372441701, gb-0-1-O
+Game State:                                               = 7042955148129803878, ...., gb-2-2-O
+ The player turn: X or O                                  = 13248304276598719659
+ The current state of the game board
+                                                         Zobrist hash:
+                                                          Let's say that the game state is: turn of X and game
+                                                          board with X in gb0-0 and O in gb0-1
+                                                          h=0
+                                                          h = h XOR 14834675960217676050 (turn-X)
+                                                          h = h XOR 16553800896814140684 (gb-0-0-X)
+                                                          h = h XOR 7042955148129803878 (gb-0-1-O)
+                                                          h is 5321050658883926648
+We can go from a complex game state to a simple hash
+
+    ... but how can we go from the simple Zobrist
+         hash back to the complex game state?
+                       We can't!
+
+
+
+                        ... but
+...We don't need to generate back the game state!
+
+        Let's say that in the transposition table we have
+        the Zobrist hash 5321050658883926648 we just
+        generated (from the previous example)
+
+        Before performing a full search from the starting
+        node:
+         We extract the game state, let's say that it is: turn of player X, X in gb-0-0
+         and O in gb-0-1
+         We compute its Zobrist hash (in this example it will be
+         again 5321050658883926648)
+         We check if the computed Zobrist hash has already been stored in the
+         transposition table
+         If so, we already performed a search from this node! We can re-use the
+         values stored in the transposition table
+         If not, we perform the search, we gather the outputs and save them in a
+         new entry for the transposition table (with the computed Zobrist has)
+  Are we sure that we will always generate distinct
+      Zobrist hashes for distinct game state?
+                                    The answer is NO
+
+However, if the random numbers generated for the key elements are very big and they are all
+                   different, then it is very unlikely to experience this issue
+                                     Summary (1)
+
+Games
+ An adversarial game is a particular problem where there are two or more agents with competing
+ goals
+ In a game, actions are commonly called moves and the rules of the game determines what are the
+ legal actions at each time and how the game transitions from one state to another given a player's
+ move
+ Terminal states of a game are states where no more moves are possible or when the game ended
+ with winners or losers
+ For each terminal state of the game we have a payoff value for all the players when in that specific
+ state
+                                       Summary (2)
+
+Adversarial Search Strategies
+ The more simple class of games are games that are deterministic, two-players, turn-taking, perfect-
+ information and zero-sum
+ We can solve this class of games with the Minimax algorithm
+ For games with a complex state space, the minimax algorithm may be inefficient and it can be optimised by
+ using pruning techniques, such as the alpha-beta pruning
+ Pruning techniques might not be enough and more complex classes of games may require too long
+ computational times with the minimax algorithm. In that case, we can use a Monte Carlo Method to
+ approximate a solution by running multiple simulations
+ Monte Carlo Tree Search consists of four steps: selection, expansion, simulation, and backpropagation
+ For games with a high number of remaining distinct playouts, MCTS may not converge to an optimal
+ solution
+ We can further optimise adversarial search strategies by making use of heuristics or transposition tables
+ Transposition tables can be efficiently stored by making use of Zobrist hashes
+               Week 5: Knowledge and Reasoning
+
+               Recommended Activities for Week 4:
+What's next?    Review Chapter 6 of the reference textbook (limited to sections 6.1
+                to 6.4)
+                Complete the workshop exercises for week 4
+                Submit the solution to Assignment 1 before the end of this week
+                Start looking at Assignment 2
+                  Appendix
+Pseudocode of the variations on the presented algorithms
+Minimax
+Implementation
+(with limited
+depth)
+Alpha-beta
+pruning
+Implementation
+(with limited
+depth)
+
+
+
+
+                 alpha: payoff value of the best choice we found so far for p, beta: payoff value of the worst choice we found so far p
+Minimax
+Implementation
+with
+transposition
+tables
+

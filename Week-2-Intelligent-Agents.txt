@@ -1,0 +1,469 @@
+Week 2:
+Intelligent Agents
+COSC350/550
+Artificial Intelligence
+               Agenda
+
+
+
+
+1   Rational Agents
+2   The Nature of Environments
+
+3   Agent Programs
+Rational Agents
+                 Acting Rationally
+
+Previously .....
+
+Systems that act in a rational way
+ Rational behaviour: doing the right thing, i.e. maximise goal-achievement
+
+
+AI is: “The branch of computer science that is
+concerned with the automation of intelligent
+behaviour” (Luger and Stubblefield, 1993)
+
+Goal: To build agents that can perceive and acts
+rationally
+ Intelligent agents
+ Focus on rational behaviour
+           An entity or system that perceives, makes
+           decisions and acts in order to achieve its
+           goals or objectives effectively
+
+           It is characterised by its ability to reason,
+           learn, and adapt its behaviour based on
+           available information and past experiences
+Rational
+Agent      A rational agent strives to maximise its
+           expected performance by selecting actions
+           that lead to favourable outcomes
+
+           The behaviour of a rational agent is guided
+           by rationality principles, such as logical
+           reasoning, probabilistic inference, and
+           optimisation techniques
+...but how does an agent perceive?
+   how does it perform its actions?
+              An agent can use its sensors to perceive
+
+              An agent can use its actuators to act
+              Also called "effectors"
+
+Sensors and   Human Agent
+Actuators     Sensors: Eyes, ears, taste, smell, ...
+              Actuators: Hands, legs, mouth, ...
+
+
+              Artificial Agent
+              Sensors: Cameras, microphones, laser range sensors, ...
+              Actuators: Wheels, motors, tablet display, speakers, ...
+...but what does an agent perceive?
+ Where does it perform its actions?
+              The external context or surroundings in
+              which an intelligent agent operates and
+              interacts
+
+              It can be physical, virtual, abstract or a mix
+              of them
+
+The           Different environments pose unique
+Environment   challenges and require specific strategies
+              and algorithms for intelligent agents to
+              achieve their goals effectively
+
+              Designing intelligent agents that can adapt
+              and perform optimally requires
+              understanding environment characteristics
+              and properties.
+                                 Agent and Environment
+
+  The agent interact with the environment through
+  its sensors and actuators
+
+  Percepts: the content perceived from the
+  environment by the agent's sensors
+
+  Percepts sequence: the complete history of
+  everything the agent has ever perceived
+
+  Action: what the agent could possibly do in the
+  environment through its actuators
+
+  A rational agent aims to choose the next best
+  action at any given time based on its knowledge
+  and what was previously perceived
+
+An agent cannot base its decisions on anything that it
+has not perceived yet!!!
+...but "best action" how?
+              An objective metric or criterion to measure
+              the success of an agent's behaviour
+               Examples: efficiency, accuracy, speed, cost, safety, ...
+
+
+              Quantify agent success in achieving goals in
+              given environment
+Performance   The performance measure serves as a guide
+Measure       for the agent to make decisions and take
+              actions that maximise its performance
+
+              Choosing a performance measure depends
+              on the task/application of the agent
+               We want a performance measure that incentivises desirable
+               behaviour and discourages undesirable behaviour in the agent
+               This is not always the case, thus leading to poor behaviour
+              What is rational at any given time depends on
+              four things:
+
+               1   The performance measure that defines the
+                   criterion of success
+Rationality
+               2   The agent’s prior knowledge of the
+                   environment
+               3   The actions that the agent can perform
+               4   The agent’s percept sequence to date
+         Definition of Rational Agent
+
+
+
+ For each possible percept sequence, a rational
+ agent should select an action that is expected
+to maximise its performance measure, given the
+evidence provided by the percept sequence and
+   whatever built-in knowledge the agent has.
+
+                   Russell, Stuart J. Artificial intelligence a modern approach 4th Ed (p. 57)
+             The agent's behaviour can be described by a
+             function mapping percept histories to
+             actions:
+
+
+
+
+Rational     If we specify this agent function, we have
+Agents as    said more or less everything there is to say
+             about the agent
+a Function
+             The agent function for an artificial agent is
+             implemented by an agent program
+
+             In most situations, it is unfeasible to fully
+             specify this function as a table [P -> A]
+              A rational agent is not necessarily perfect or
+              omniscient but rather acts based on the best
+              available information and reasoning
+              processes
+Rationality    Omniscience is impossible in reality!
+
+
+and           Imperfect knowledge refers to the idea that
+Imperfect     rational agents may not have complete or
+              accurate information about the environment
+Knowledge     or its dynamics
+
+              Rationality allows agents to handle situations
+              where perfect or complete knowledge is not
+              feasible or realistic
+           An agent is autonomous if it can learn to
+           compensate from partial or incorrect prior
+           knowledge
+
+           Autonomy is crucial for intelligent agents:
+           1. Adaptability: Agents can adjust behaviour based on changing
+              circumstances
+Autonomy   2. Efficiency and Responsiveness: Independent decision-making
+              improves responsiveness due to reduced human guidance
+           3. Scalability: Agents handle large-scale environments and data
+           4. Flexibility: Agents explore different strategies and approaches
+              without relying on fixed rules or instructions
+           5. Decision-making under uncertainty: Agents navigate uncertain
+              environments effectively
+           6. Continuous learning: Agents improve performance through
+              experience
+The Nature of Environments
+                 A concept to group:
+                 1. Performance measure: how do we measure the
+                    performance of our intelligent agent?
+                 2. Environment: where is the agent situated?
+                 3. Actuators: how can the agent act in the
+Task                environment
+                 4. Sensors: how can the agent perceive in the
+Environments        environment
+
+               PEAS (Performance, Environment, Actuators, Sensors)
+               Task Environment = The Problem
+               Rational Agent = The Solution
+                                          Examples
+
+                       Performance            Environment              Actuators               Sensors
+
+
+                                          Representation of the   Display moving chess
+                     Number of games                                                       Keyboard, mouse,
+Chess game program                          chess board (at         pieces (with legal
+                          won                                                             touchscreen inputs
+                                               minimum)                  moves)
+
+
+
+                                                                                         Button state, sensor
+                     Quality of cooked     Microwave content        On/Off buttons,      on the door, humidity
+Microwave oven
+                            food          and state of the door   Power, beeps, alarms   sensor, temperature
+                                                                                               sensor, ..
+
+
+
+                                                                                         May include cameras,
+                                                                    Wheels, suction
+                     Cleanliness of the    The house and its                              dirt sensors, laser
+Robot Vacuum                                                        mechanism (at
+                            floor               content                                   sensors, bumpers,
+                                                                      minimum)
+                                                                                                  etc.
+how do we classify environments?
+                                              Fully Observable Environments
+                                                If the sensors of the agent give it access to the whole relevant state of
+                                                the environment at all times
+
+Fully Observable                                Relevant is intended as "relevant to the chosen performance
+                                                measure"
+vs.                                                Does the agent have access of all the information necessary to make
+                                                   rational decisions based on the performance measure chosen?
+
+Partially                                     Partially Observable Environments
+Observable                                      Agent's sensors cannot pick all the information about the environment
+                                                state at each time
+
+Environments                                       Noisy sensors
+                                                   (Temporarily) inaccessible parts of the environment -> information
+vs.                                                missing from sensor data
+
+
+Unobservable                                  Unobservable Environments
+                                                The state of the environment cannot be picked by the agent's sensors
+Environments                                    at all (or the agent does not have sensors)
+
+
+
+ Probabilistic reasoning methods can be used to overcome challenges experienced in partially observable or
+                                        unobservable environments
+               Single-Agent Environments
+                Only a single agent in the considered environment
+
+
+               Multiagent Environments
+                Two or more agents in the considered environment
+                It can be a competitive or cooperative environment:
+Single-Agent       Do the agents compete against each others or do they cooperate?
+                   This distinction is not always obvious: partially competitive or
+vs.                partially cooperative
+
+Multiagent     But what do we consider an agent?
+Environments    Does the alleged agent act to maximise a performance measure that
+                can directly impact on the other agents in the environment?
+                   Yes => then it's an agent
+                   No => it's not an agent
+                Example: Chess game, is the human an agent?
+                   Yes, because the human is trying to win and the rational agent is try
+                   to win too, thus the PM of the human directly affect that of the
+                   agent!
+                Deterministic Environment
+                 The next state of the environment completely determined by the
+                 current state and the action(s) executed by the agent
+                    Chess: if the agent moves a piece on the board, we are sure how
+                    the board will look like after that move. We can also assume an
+                    optimal opponent (deterministic opponent)
+Deterministic
+vs.             Non-Deterministic Environments
+                 The next state of the environment is not completely determined by the
+Non-             current state and action(s) executed by the agent
+                    Poker: given the current state and any action of the agent, when the
+Deterministic       agent will draw a new card it will not know what would be the state
+                    of its hand in the next state
+Environments
+                Stochastic vs. Non-Deterministic
+                 Non-deterministic when possibilities not quantified with probabilities
+                 Stochastic when the possible outcomes are quantified with
+                 probabilities
+                 Really not an essential distinction....
+               Episodic Environments
+Episodic        Agent's experience divided into atomic episodes
+                Episode: Perceps -> decision-making -> action
+vs.
+                The next episode does not depend on the actions taken previously
+
+Sequential
+               Sequential Environments
+Environments    Agent's experience not divided in distinct episodes
+                The agent's present decision may affect its future decisions
+               Static Environment
+Static          The state of the environment does not change without deliberate
+vs.             actions from the agent(s)
+
+Dynamic        Dynamic Environment
+Environments    The state of the environment may change even without deliberate
+                actions from the agent(s)
+Discrete      Discrete Environments
+vs.            Finite number of states and finite number of agent's actions
+
+Continuous    Continuous Environments
+Environment    Infinite number of states and infinite number of agent's actions
+              Known
+               The agent has knowledge about the "laws of physics" governing the
+               environment and it can use this knowledge to make decisions
+               Example: Poker, Agent knows the rules of the game and can use
+               them to guide its actions
+
+Knowledge     Unknown
+about the      The agent does not have knowledge about the "laws of physics"
+               governing the environment
+Environment    Example: Developmental robot, Agent does not know yet how to
+               interact with a new observed object
+
+
+              The knowledge about the environment can
+              be partial
+               And it can be acquired through learning
+Agent Programs
+              Agent Function
+              Describes the behaviour of the agent from percepts to actions
+
+
+              Agent Program
+              Implements the agent function in a program
+
+Agents'       Agent Architecture
+Structure     The computing device including sensors and actuators of the agent
+              where the agent program would run
+
+
+            Agent = Agent Architecture + Agent Program
+            The agent program must be appropriate for the
+            chosen architecture!
+                                                  Sense
+
+
+                                                  Think
+Agent
+Program                                           Act
+
+
+          The function f is our agent program (Think)
+          The agent program may need to record past percepts in the
+          agent's memory
+          A lookup table P* -> A is not a viable implementation in real
+          scenarios
+           Simple Reflex Agent
+
+           Model-based Reflex Agent
+Classes    Goal-based Agent
+of Agent
+           Utility-based Agent
+Programs
+           ... also
+            Logical Agent
+            Learning Agent
+Simple Reflex Agent
+
+
+
+             No memory of past percepts
+             Action solely selected based on current
+             percepts
+
+
+             Using simple condition-action
+             rules to choose an action
+             IF <condition met> THEN <action taken>
+Model-based Reflex Agent
+
+               Internal state of the percept
+               history
+               The agent keeps a model of the world
+
+
+               Transition model
+               The agent has a model (accurate or not) to
+               make sense on how the world evolves given its
+               actions
+
+
+               Sensor model
+               The agent has a model (accurate or not) to
+               make sense of how the state of the world is
+               reflected by the agent's percepts
+Goal-based Agent
+
+           Goal information describing
+           what's desirable
+           The agent chooses actions that can help to
+           achieve the desired goals
+           The agent does not only look at the immediate
+           effect of its actions (i.e. condition-action rules)
+           but also how that action may assist to achieve
+           its goal(s) in future
+
+
+           The internal model can be
+           used to make predictions
+           about the future state
+           The agent works out which action most likely
+           assist to achieve the desired goals
+Utility-based Agent
+
+             A goal may be achieved in different
+             ways
+             Which way is the best? Efficient, quick, safe, ...
+
+
+             Utility function
+             An internal representation of the considered
+             performance measures
+             If the internal utility function and the external
+             performance measures are in agreement, an agent
+             maximising the utility function is considered rational
+             (one of the many ways to be considered rational)
+
+
+             A Utility-based agent may not
+             necessarily be a model-based
+             The agent can still use a utility function to maximise but
+             know nothing about the effects of their actions on the
+             environment
+Summary
+Rational Agents                                The Nature of Environments
+ An agent that acts to maximise its expected    Task environments group Performance
+ performance                                    Measure, Environment, Actuators and
+ Sensors can be used to perceive the            Sensors of the agent
+ environment: Percepts                          Environment can be:
+ Actuators can be used to interact with the       fully observable or partially observable
+ environment: Actions                            single-agent or multiagent
+ The behaviour of an agent can be fully          deterministic or non-deterministic
+ specify by the agent function                   episodic or sequential
+ The agent function is implemented into the      static or dynamic
+ agent program                                   discrete or continuous
+
+
+
+
+                                                                                             Continue...
+Agent Programs
+ An agent is the integration of an agent architecture and an agent program
+ The agent program returns an action given the present percepts gathered by the agent (and a
+ model of the world, if available)
+ Simple reflex agents: has no model of the world and no memory
+ Model-based reflex agents: has memory and representation of the world
+ Goal-based agents: goals drives the agent's actions instead of simple condition-action rules
+ based on the current state
+ Utility-based agents: the agent weights alternative ways to achieve its objectives based on a utility
+ function
+              Week 3: Classical Search Strategies
+
+              Recommended Activities for Week 2
+What's Next    Review Chapter 2 of the reference book
+               Attend / complete the workshop for this week
+               Start looking at Assignment 1 requirements
+

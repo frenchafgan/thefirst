@@ -1,0 +1,1070 @@
+Week 5:
+Knowledge and Reasoning
+COSC350/550
+Artificial Intelligence
+                Agenda
+
+
+
+
+1   Logical Agents
+2   Propositional Logic
+
+3   First-Order Logic
+Logical Agents
+             Agents with a model of the world stored in a
+             Knowledge Base (KB)
+
+             A KB is a set of sentences
+Knowledge-
+             Each sentence represents a fact in the world
+Based        and it is expressed according to a
+Agents       Knowledge Representation Language
+
+             If a sentence is given without being derived
+             by other sentences in the KB it is called an
+             axiom
+              It is possible to update the KB with new
+              sentences and to gather information about
+              what known
+
+              TELL denotes the operation of updating the
+Interacting   KB with new knowledge that the agent may
+              gather from sensors or experience
+with the KB
+              ASK denotes the operation of gathering
+              information from what known by the KB
+
+              Both these operations may involve inference,
+              that is deriving new sentences from old ones
+               At each time, a simple KB-Based agent can
+               follow the following three steps:
+
+               TELL the KB new information (e.g. gathered
+               from sensors)
+
+A three step   ASK the KB what actions to perform next
+               based on an action query
+process
+               TELL the KB what action was chosen and
+               execute the chosen action
+
+               This is just a very simple representation of a
+               KB agent... this process can be more
+               complex in practice
+              A procedural approach encodes the desired
+              behaviour as a sequence of instructions
+              (program code)
+              How do we solve the problem?
+
+Declarative   E.g. Python, Java, ...
+
+
+vs            A declarative approach declares what known
+Procedural    and what is the goal to achieve, without
+              providing a set of instructions to achieve that
+Approach      goal
+              What do we know about the problem?
+              E.g. SQL, Prolog, ...
+
+
+              KB-based agents use a declarative approach
+              An Example: Wumpus World
+
+
+Consider a cave environment with smelly
+creatures called Wumpus and deadly pits
+
+The agent must find the gold in the cave
+take it out from the cave but without falling
+into pits and by also avoiding being eaten
+by a Wumpus
+
+The agent can move top, down, left and
+right one square at a time. It can also shoot
+one arrow in one of these directions to try
+killing a Wumpus
+
+The agent is only sure about what's
+happening in the current quadrant. However
+it can perceive a breeze if next to a pit and a
+stench if next to a Wumpus (that does not
+move)
+                                At Start
+
+
+The agent starts in [1,1] with its
+knowledge only being that it is in
+square [1,1] and that square is safe
+In this square, the agent does not
+perceive stench or breeze, so it can
+infer that the neighbouring squares
+[1,2] and [2, 1] are safe
+
+The agent must decide where to
+move. A cautious (rational) agent
+should move to a square that is
+safe. In this case, both available
+options are safe but let's move to
+[2, 1]
+                       Moving Forward
+
+The agent is now in position [2,1]
+and it can perceive a breeze
+There must be a pit in one of the
+neighbouring squares: [1,1], [3, 1]
+or [2, 2]
+
+The agent already visited square
+[1,1] and knows that it is safe, so
+the pit cannot be in [1,1]. It must
+be in [3,1], [2,2] or both
+At this point, the only remaining
+safe option is square [1,2] so it is
+best to go back to that square
+                                Back to Safety
+
+The agent is now in position [1,2] and it can
+perceive a stench
+
+There must be a Wumpus in one of the
+neighbouring squares: [1,1], [1, 3] or [2, 2]
+
+The agent already visited square [1,1] and
+knows that it is safe, so the Wumpus
+cannot be in [1,1]
+
+The agent also know that the Wumpus
+cannot be in [2,2] otherwise it would have
+perceived a stench when it was in [2,1],
+therefore the Wumpus must be in [1,3]
+
+Since the agent does not perceive a breeze
+in [1,2], the pit cannot be in [2, 2] and it
+must be in [3,1]. So [2,2] must be a safe
+option and the agent can move there
+                    To the Treasure!
+
+
+The agent is now in position
+[2,2] and it does not perceive
+breeze or stench, therefore the
+neighbouring squares must be
+safe
+
+We can assume that the agent
+will move to [2, 3], perceive
+the gold, grab it and get back
+to [1,1] to escape from the
+cave with the treasure
+  A Fundamental Property of Logical Reasoning:
+
+A conclusion inferred from the available information is guaranteed to
+          be correct if the available information is correct
+Propositional Logic
+        A Logic defines the syntax and the
+        semantics of a sentence
+
+        Syntax: how can we check if a sentence is
+        well formed?
+        E.g. In Boolean Logic "x AND y" is a syntactically correct, whereas "x
+        AND OR y" is not
+Logic
+        Semantics: how do we determine if a
+        sentence is true or false in a given
+        "context"?
+        E.g. x AND y does not tell us anything about its truth or falsity if we do
+        not know x and y, however in Boolean logic we know that x AND y is
+        true only if both x and y are true. This rule gives the semantic
+        (interpretation of the meaning) for the considered sentence
+           A model in logic describes a possible way of
+           assigning values to the different elements or
+           variables in the considered "context" to
+           determine the truth of sentences
+           E.g. In the context of a sentence x AND y we can have a model where
+           both x and y are true making the sentence true and a model where
+Models     either one of the two variables are false, making the sentence false
+
+in Logic   Given a sentence α, we use the notation M(α)
+           to define the set of all the possible models
+           of α where α is true
+
+           Given a sentence α, we say that a model
+           m  ∈ M(α) satisfies the sentence α
+             If a sentence β follows logically from a
+             sentence α we write: α ⊨ β (α entails the
+             sentence β)
+Logical
+Entailment   α ⊨ β if and only if for every model of α
+             where α is true, β is also true, therefore: M(α)
+             must be a subset of M(β)
+             Baba is a cat ⊨ Baba is a mammal
+                          Review with an Example (1)
+
+Boolean Logic:                                                      Possible models (for the "world"
+ a: (x OR y) AND z                                                  defined by sentence a):
+ b: z AND x NOT y                                                   1. {x = true, y = true, z = true}*
+                                                                    2. {x = true, y = true, z = false}
+Syntax:                                                             3. {x = true, y = false, z = true}*
+ a is syntactically correct, whereas b is not                       4. {x = false, y = true, z = true}*
+                                                                    5. {x = true, y = false, z = false}
+Semantics:                                                          6. {x = false, y = false, z = true}*
+ a will be true if z is true and either x or y (or both) are true   7. {x = false, y = true, z = false}
+                                                                    8. {x = false, y = false, z = false}
+
+
+                                                                    M(a): the items in green
+
+                                                                    Entailments example:
+                                                                    (x OR y) AND z ⊨ z
+                                                                    In fact, M(α) is a subset of M(β) [M(β) highlighted with *]
+                      Review with an Example (2)
+                         Syntax and semantics do not only relate to logic
+
+
+
+
+Arithmetics:                                            Possible models (for the "world"
+ a: (x + y) * z = 0                                     defined by sentence a):
+ b: z * y x + = -1                                      Too many! x, y and z can assume any numeric
+                                                        value. Let's say that the models for this "world"
+                                                        are defined by the equation:
+Syntax:                                                 f(x, y, z) = 0, with f: (x + y) * z
+ a is syntactically correct, whereas b is not
+
+                                                        M(a):
+Semantics:                                                {z = 0, x = any number, y = any number}
+ a will be true if z 0 or (x + y) is zero (i.e. x = -
+ y)                                                       {z = any number, x = -y}
+             Grounding refers to the process of mapping
+             symbolic or abstract representations to
+             concrete or real-world entities or values
+             For example, via the agent's sensors
+
+Closed       When assuming a closed world, everything
+World vs     that it is not known it is assumed to be false
+Open World   If a fact is not in the KB, than that fact is false
+
+
+             When assuming an open world, not knowing
+             a fact does not imply that fact is false
+             If a fact is not in the KB we can't draw conclusions about its truth or
+             falsity
+                                          An Example
+
+Consider an agent with the sentence:                     Closed world:
+(userConfused OR userAngry) AND                          userAskedQuestion is assumed to be false. Hence,
+                                                         the sentence is False
+userAskedQuestion
+This sentence represent a specific situation that can
+happen in the agent's "world"                            Open world:
+                                                         userAngry and userAskedQuestion are unknown. The
+                                                         first part of the sentence can be assumed True
+Via the camera sensor, the agent is                      (knowing that the user is confused is enough).
+able to store the following fact:                        However, the second half can be true or false, so the
+userConfused = True                                      sentence can be true or false.
+
+We do not know anything about the
+rest
+This is an example of Grounding
+Different from a possible model for this
+"world" because we are storing (grounding) concrete
+values for the considered elements of the "world" (not
+just listing possible alternatives)
+                      Propositional Logic: Syntax
+
+1   Each atomic sentence consists                        4   Complex sentences are built
+    of a single proposition symbol                           from simpler sentences using
+    A single propositional variable or its negation is       parentheses and operators
+    called a "literal"
+                                                             (logic connectors):
+                                                             ¬ (NOT): this operator takes only one sentence
+2   A proposition is denoted with                            as input and it negates it
+    an uppercase letter (e.g. P, Q,                          ∧ (AND): this operator takes two sentences as
+                                                             input (conjuncts) to obtain a conjunction
+    ...)
+                                                             ∨ (OR): this operator takes two sentences as
+                                                             input (disjuncts) to obtain a disjunction
+3   Each proposition symbol can                              ⇒ (implies): this operator takes two sentences
+    be either true or false                                  as input (a premise and a conclusion) to obtain
+                                                             an implication
+    Special proposition symbols:
+       True, this proposition is always true
+                                                             ⇔ (if and only if): this operator takes two
+                                                             sentences as input to obtain a biconditional
+       False, this proposition is always false
+                    Operators Precedence
+
+
+When no parentheses
+defines a clear order of
+precedence for the
+operations, then the
+following list provides a
+precedence order for the
+logical operators:
+1. NOT
+2. AND
+3. OR
+4. IMPLIES
+5. IF AND ONLY IF
+    Propositional Logic: Semantics
+
+1   True is always true
+2   False is always false
+3   ¬p is true iff p is false
+    with p being a sentence, atomic or complex
+
+
+4   p ∧ q is true iff both p and q are true
+5   p ∨ q is true iff either p or q is true
+6   p ⇒ q is true unless p is true and q is false
+7   p ⇔ q is true iff p and q are both true or both false
+A KB in Propositional Logic for the Wumpus World
+
+  Notations:                                           Immutable facts that we know
+   Px,y denotes a pit in the square with               (denoted with R, stands for
+   coordinates x and y and it is true if and only if
+   there is a pit in that square                       rule):
+                                                        R1: ¬P1,1 (there is no pit in the initial square)
+   Wx,y denotes a Wumpus in the square with
+   coordinates x and y and it is true if and only if    R2: B1,1   ⇔
+                                                                   (P1,2  ∨  P2,1) (there is a breeze in
+   there is a Wumpus (dead or alive) in that            square 1,1 iff there is either a pit in 1,2 or in
+   square                                               2,1)
+   Bx,y denotes a breeze in the square with             R3: B2,1   ⇔ (P1,1 ∨ P2,2 ∨ P3,1)
+   coordinates x and y and it is true if and only if
+                                                        ... we need to create a rule for the breeze for
+   there is a breeze in that square
+                                                        each possible square in the Wumpus world
+   Sx,y denotes a stench in the square with
+   coordinates x and y and it is true if and only if
+                                                        Rk: S1,1   ⇔
+                                                                   (W1,2   ∨  W2,1) (there is a stench in
+                                                        square 1,1 iff there is either a Wumpus in 1,2
+   there is a stench in that square
+                                                        or in 2,1)
+   Lx,y denotes the location of the agent in the
+                                                        ... again, we need to create a rule for the
+   square with coordinates x and y and it is true if    stench for each possible square in the
+   and only if the agent is currently in that square    Wumpus world
+         Updating the Agent's KB
+
+When the agent is at the starting point (1,1) it
+can add the following fact to the KB:
+ ¬B1,1 (there is no breeze in 1,1) [we add true facts to the KB]
+ ¬P2,1
+ ¬P1,2
+ ¬W2,1
+ ¬W1,2
+
+
+When the agent moves in position (2, 1) it can
+add the following fact to the KB:
+ B2,1 (there is a breeze in 2, 1)
+New Facts       Is it possible to infer a new fact from the
+                present KB? i.e. does KB ⊨ α for some
+via Inference   sentence α?
+             1     We list all the possible models of the world
+             2     We check if α is true in every model where
+                   the present KB is true ( M(KB) )
+             3     If so, then KB ⊨ α
+Inference
+via         This inference algorithm is sound and complete:
+                Sound: it is guaranteed to derive only entailed sentences
+Model-          because it directly implements the definition of entailment
+
+Checking         Complete: for any KB, we are sure that it will derive any
+                 sentence that is entailed by the KB because it considers every
+                 possible model of KB that is also a model of α
+            However, it has a high complexity:
+                 If KB and α together contain n symbols, then there are 2n
+                 possible models to consider, thus the time complexity is O(2n)
+                 (but the space complexity is only O(n) because a depth-first
+                 approach can be used for the enumeration process)
+         Back to the Wumpus World
+
+What we know so far:
+  P1,1= false, B1,1= false, B2,1= true, P1,2= false, P2,1= false, R1 = true, ..., Rk = true
+  P2,2= ?, P3,1= ?
+  R3: B2,1   ⇔ (P1,1 ∨ P2,2 ∨ P3,1)
+  Because of R3, either P2,2 OR P3,1 must be true for R3 to be true (and R3 must be true in KB
+  because it is a rule of the game)
+
+
+M(KB) (limited to the relevant symbols P1,1, B1,1, B2,1, P1,2,
+P2,1, P2,2, P3,1)
+{P1,1= false, B1,1= false, B2,1= true, P1,2= false, P2,1= false, P2,2= false, P3,1= true, R1 = true, ..., Rk =
+true}
+{P1,1= false, B1,1= false, B2,1= true, P1,2= false, P2,1= false, P2,2= true, P3,1= false, R1 = true, ..., Rk =
+true}
+{P1,1= false, B1,1= false, B2,1= true, P1,2= false, P2,1= false, P2,2= true, P3,1= true, R1 = true, ..., Rk =
+true}
+
+
+So we can entail:
+KB ⊨ P2,2    ∨ P3,1
+   Is there a better way to infer facts
+    from a KB in propositional logic?
+Yes, but first we need to introduce the concepts of logical equivalence, validity and
+                                     satisfiability
+                               Logical Equivalence
+
+
+Two sentences α and β
+are logically equivalent
+(denoted with α ≡ β) iff
+M(α) = M(β)
+α ≡ β iff M(α) = M(β)
+
+We can also define logical
+equivalence as:
+α ≡ β iff α ⊨ β and β ⊨ α
+In fact, α ⊨ β iff M(α) ⊆  M(β) and β
+⊨ α iff M(β)⊆    M(α), therefore M(α)
+= M(β)
+                                            STANDARD LOGICAL EQUIVALENCES
+                           Validity
+
+
+A sentence is valid if it is true in all models
+
+Valid sentences are also known as tautologies
+
+From the definition of entailment and validity we
+can derive the deduction theorem:
+
+α ⊨ β iff α
+Remind that α ⇒
+               ⇒ β is valid
+                β is true when the premise α is false or when both the
+premise α and the conclusion β are true
+                              Satisfiability
+
+A sentence is satisfiable if it is true in some model
+(or it is satisfied by some model)
+α is satisfiable iff M(α) ≠   ∅
+We can check the satisfiability of a sentence by
+enumeration:
+We list every possible model until α is true in one model
+
+
+Determining if a sentence is satisfiable in
+propositional logic (the SAT problem) was the first
+problem proven to be NP-complete
+No polynomial-time algorithm has yet been discovered for any NP-complete
+problem, nor has anybody yet been able to prove that no polynomial-time
+algorithm exists for any of them... we simply don't know yet
+             Proof by Contradiction
+
+
+Given the definition of entailment and
+satisfiability we can derive the following:
+
+α ⊨ β iff (α
+i.e. M(α   ∧ ¬β) =
+                     ∧
+                     ∅
+                       ¬β) is unsatisfiable
+
+
+We assume a sentence β to be false and this
+leads to a contradiction with known axioms α,
+which is clearly always false, i.e. the
+contradiction is unsatisfiable
+                     Inference Rules
+
+
+Inference rules can be applied to derive a proof,
+i.e. a chain of conclusions leading to the desired
+goal
+
+Modus Ponens: {α
+If the sentence α
+                                ⇒ β, α} ⇒ β
+                    ⇒ β and the sentence α are given, then we can infer β
+And-Elimination: (α              ∧ β) ⇒ α
+All the logical equivalences can be used as
+inference rules
+                Inferences from the Wumpus World
+
+Our KB (at start)                                               Therefore we can update the KB as
+KB = {¬P1,1, ¬B1,1, R1, ..., Rk}                                {¬P1,1, ¬B1,1, ¬P1,2, ¬P2,1, R1, ..., Rk}
+Remind that in the KB we only have true facts (sentences that
+are true)
+
+
+Proving ¬P2,1, ¬P1,2:
+1. Biconditional elimination on R2: B1,1⇔ (P1,2 ∨ P2,1)
+           ⇒ ∨ ∧ ∨
+   (B1,1 (P1,2      P2,1))  ((P1,2      ⇒ B1,1)
+                                    P2,1)
+2.   And-Elimination inference on (1)
+     ((P1,2 ∨ P2,1) ⇒ B1,1)
+3.   Contraposition on (2)
+     ¬B1,1 ⇒ ¬(P1,2 ∨ P2,1)
+4. Modus Ponens on (3) and the fact ¬B1,1
+   ¬(P1,2  ∨
+          P2,1)
+5.   De Morgan's rule on (4)
+     ¬P1,2 ∧ ¬P2,1
+6. And-Elimination inference on (5)
+   ¬P1,2
+   ¬P2,1
+Monotonicity of Logical Systems
+
+
+
+The set of entailed sentences can only increase
+as information is added to the knowledge base
+If KB ⊨ α, then KB   ∧β⊨α
+This means that we can apply an inference rule
+whenever we find valid premises for the
+conclusion. That conclusion will still be valid no
+matter what we will find next in the KB
+             Definite Clauses and Horn Clauses
+
+
+Definite clause: a disjunction                         Horn clause: a disjunction of
+of literals of which exactly                           literals of which at most one
+one is positive                                        is positive
+disjunction = OR                                       E.g.
+literals = single proposition symbol or its negation   x ∨ ∨ ¬z ; ¬x ∨ z ; ¬y ∨ ¬z => valid Horn
+                                                           ¬y
+positive literal = single proposition symbol without   clauses
+negation                                               x ∨ z ∨ ¬y => not valid (more than 1 positive literal!)
+E.g.                                                   Note: all definite clauses are also Horn clauses
+x∨ ¬y ∨ ¬z ; ¬x ∨ z => valid definite clauses
+¬y ∨ ¬z ; x ∨ z ∨ ¬y => not valid definite clauses
+(we need exactly one positive literal!)                Goal clause: a Horn clause
+                                                       without positive literals
+                                                       E.g. ¬y   ∨ ¬z
+Why Using Definite and Horn Clauses in a KB?
+
+      Every definite clause can be written as an implication
+      Premise of the implication: conjunction of positive literals (we negate the negative literals in the
+      definite clause)
+      Conclusion of the implication: single positive literal (the positive literal in the definite clause)
+           ∨ ¬y ∨ ¬z can be written as (y ∧ z) ⇒ x (if y and z conditions are met, then x must be
+      E.g. x
+      true)
+      Special case with single positive literal (fact): y can be written as True ⇒ y, but normally this is
+      added as simply y in the KB
+
+
+      Deciding entailment with Horn clauses can be done in time
+      that it is linear in the size of the KB
+      Deciding entailment means that given a knowledge base KB and a sentence α we ask if KB ⊨ α
+
+
+      Inference with Horn clauses can be done with forward-
+      chaining or backward-chaining (see next slides...)
+      These are simple to understand inference algorithms and most commonly used in actual logical
+      inference models
+                       Forward-Chaining
+
+We aim to determine if a single proposition symbol q is entailed
+by KB
+KB ⊨ q ? i.e. can we infer q from KB?
+
+
+Our KB contains only definite clauses
+
+The algorithm begins from a set of known facts (single positive
+literals) that are in the KB
+
+If we know all the premises of an implication (i.e. all the
+positive literals from the premise are in the set of known facts)
+then we add the conclusion to the set of known facts
+E.g. if KB known facts are {x, y} and the implication (x   ∧ y) ⇒ z is in the KB, then we add z to the set
+of facts: {x, y, z}
+
+
+The algorithm continues until q is added to the set of facts (KB
+entails q) or no further inference can be made (KB does not
+entail q)
+Forward-
+Chaining
+Implementation
+                  Backward-Chaining
+
+We aim to determine if a single proposition symbol q is
+entailed by KB
+KB ⊨ q ? i.e. can we infer q from KB?
+
+
+Our KB contains only definite clauses
+
+The algorithm begins from a set of known facts (single
+positive literals) that are in the KB
+
+If q is in the list of known facts, then no work is needed
+(KB ⊨ q)
+
+Otherwise, we look for the clauses having q as their
+conclusion and for each of them we check if all the
+premises can be proven true by backward-chaining. If so, q
+is true (KB ⊨ q) otherwise q must be false
+Backward-
+Chaining
+Implementation
+Forward-Chaining vs Backward-Chaining
+
+
+   Forward-Chaining is a data-driven approach
+   When we get new data, we try to infer additional facts
+   E.g. planning, monitoring, control, expert systems, ...
+   It may do a lot of work irrelevant to the goal
+
+
+   Backward-Chaining is a goal-driven approach
+   More appropriate for problem-solving when we need to answer a question
+   about what we know from the KB
+   E.g. game theory, automated inference engines, theorem proofs, ...
+   Often, this algorithm is much less linear in size of the KB because we only
+   consider facts relevant to the considered goal and subgoals
+First-Order Logic
+              More Expressiveness
+
+Propositional Logic gives us a way to declare what we
+know about the world and make inferences to learn
+new facts
+
+However, for complex problems, the number or rules
+to fully represent the known facts might be too high
+In the example of the Wumpus world we need to explicitly add a rule about breeze
+and stench for each possible square in the Wumpus world
+
+
+Propositional Logic is not a concise language to
+describe an environment with many elements
+
+We need a language with more expressiveness
+It would be nice to have a language where it is possible to express sentences like
+"adjacent squares to pits are breezy" and "adjacent squares to Wumpus smell of
+stench"
+Natural languages are very expressive
+    but they are also ambiguous
+
+ Propositional Logic is unambiguous
+     but not very expressive...
+
+ Can we take the best out of both?
+                   Nouns and Verbs
+
+In a natural language, the most salient elements are
+nouns and verbs
+
+Nouns inform about the objects involved
+
+Verbs (along with adjectives and adverbs) inform
+about relations among objects and their properties
+
+Relations and properties can be described as
+functions
+A property of an object is a unary function: Red(Ball) means that the ball is red
+Relations among objects are n-ary functions: Father(Bob, Anne) means that Bob
+is the father of Anne
+
+
+First-Order Logic is built around objects and relations
+         FOL Syntax: Introduction
+
+In FOL we have objects
+These are the elements defining the considered "world"
+
+
+The domain of a model in FOL is the set of objects it
+contains and this domain is required to be non-empty
+Every possible world must contain at least one object
+
+
+A relation sets a property on one or a relationship
+between two or more objects in the domain model
+
+We can describe a relation as a set of tuples of
+objects that are in that relation
+A tuple is a collection of objects arranged in a fixed order denoted with angle
+brackets
+                               Example
+
+Consider a scenario of two              Now we can add appropriate
+parents with a hungry baby              relations to the objects describing
+looking for milk                        the scenario:
+                                         IsFemale(Jane)
+Objects: Jane (the mom), Joe (the        IsMale(Joe), IsMale(Bob)
+dad), Bob (the baby), Milk               AreParents(Jane, Joe, Bob)
+                                         IsHungry(Bob)
+Relations: being male (unary),           Want(Bob, Milk)
+
+being female (unary), being hungry
+(unary), wanting something              Our set of tuples defining the
+(binary), being a parent of (ternary)   relations would be:
+                                         IsFemale: {<Jane>}
+                                         IsMale: {<Joe>, <Bob>}
+                                         AreParents: {<Jane, Joe, Bob>}
+                                         IsHungry: {<Bob>}
+                                         Want: {<Bob, Milk>}
+                                     FOL Syntax: Elements
+
+Constants: specific symbols representing                              Functions: symbols representing operations
+specific objects of the model's domain                                or computations producing a value given
+Their name starts with an uppercase letter                            input arguments
+                                                                      Their name starts with an uppercase letter
+Variables: symbols representing unspecified                           Different from Predicates as they return values, not True or False
+objects                                                               E.g. HairColour(Jane) is a function returning the hair colour of Jane
+Their name starts with a lowercase letter                             In FOL, functions must be total functions (there must be an output to
+                                                                      any possible input)
+
+Predicates: symbols representing properties
+or relations between objects                                          Connectives: and, or, not, implies, iff
+Their name starts with an uppercase letter
+Their interpretation can be True or False. E.g. Want(Jane, Milk) is
+                                                                      Quantifiers: symbols expressing the scope
+false in the scenario we just reviewed, whereas Want(Bob, Milk) is    of a variable in a logical statement
+true.                                                                 Universal quantifier: ∀ (for all)
+Predicates can also take variables as input: Want(Jane, x) means      Existential quantifier: ∃ (exists)
+that Jane wants something, we do not know exactly what
+
+                                                                      Parentheses: they group subformulae and
+                                                                      specify the order of operations
+         FOL Syntax: Composition
+
+Term: it can be a constant a variable or a function
+A term with no variables is a ground term
+
+
+Sentence: it can be either atomic or complex
+
+Atomic Sentence: it is a single Predicate over one or
+more terms
+IsMale(Bob) is an atomic sentence in FOL
+An atomic sentence is true in a given model if the relation referred to by the predicate
+symbol holds among the objects referred to by the arguments
+
+
+Complex Sentence: it composes two or more
+sentences together using the connectives and
+quantifiers
+IsHungry(Bob)   ∧ Want(Bob, Milk) which is interpreted as: Bob is hungry and wants
+milk
+                                     A Note on Quantifiers
+
+An interpretation of a variable x is its                              A complex sentence using an
+assignation to a specific domain                                                                          ∃
+                                                                      existential quantifier ( ) is True if there
+element                                                               is at least an interpretation of the
+E.g. x -> Jane, x -> Joe, x-> Milk, ... are all possible              variable(s) involved in the quantification
+interpretation of x in the domain we just considered
+                                                                      for which the sentence is true
+A complex sentence using a universal
+                                                                      E.g.∃   x isMale(x) ⇒   AreParents(Jane, x, Bob) will be true if
+
+                  ∀
+quantifier ( ) is True if for every
+                                                                      there is at least an interpretation of x for which this sentence is
+                                                                      true
+                                                                      In this case x -> Joe will make the sentence be true, so the
+interpretation of the variable(s) involved                            quantified sentence is true
+in the quantification, the sentence is
+true                                                                  We can have sentences with nested
+E.g.∀    x IsHuman(x) ⇒    IsMortal(x) will be true if for every
+                                                                      quantifiers
+possible interpretation of x in the domain model, the sentence is
+true. If we find at least human (x -> A, isHuman(A) = True) that is   E.g.∀ ∃
+                                                                           x   y Loves(x, y) meaning that everybody loves
+not mortal (isMortal(A) = False) then this sentence will be false     somebody
+                                                                      And ∃ y ∀ x Loves(x, y) meaning that there is someone loved
+                                                                      by everyone
+                                                                      The order is important!
+              Think as the quantifiers in terms of
+              conjunctions and disjunctions:
+              ∀ x P(x) is essentially the same of saying P(A) ∧ P(B) ∧ ...
+              ∃ x P(x) is essentially the same of saying P(A) ∨ P(B) ∨ ...
+              Hence, the quantifiers obey De Morgan's
+De Morgan's   Law:
+Law and
+Quantifiers   ¬∃ x P(x) equivalent to ∀ x ¬P(x)
+              ¬∀ x P(x) equivalent to ∃ x ¬P(x)
+
+              ∀ x P(x) equivalent to ¬∃ x ¬P(x)
+              ∃ x P(x) equivalent to ¬∀ x ¬P(x)
+                         Equality in FOL
+
+Several conventions for using equality in FOL
+
+First-Order Logic with equality
+In this convention, we have the equality symbol = with its properties:
+Riflexivity: if x = y then y = x
+Substitution for functions: if x = y then for any function f, f(..., x, ...) = f(..., y, ...)
+Substitution for formula: if x = y then for any formula P using x, if we obtain P' by
+substituting x with y in the formula, P = P'
+
+
+First-Order Logic without equality
+In this convention, we do not have the equality symbol = and the concept of
+equality is expressed with a predicate isEqual(x, y)
+We need to manually add the axioms of equality
+
+
+To express that x differs from y we can negate x = y
+                             FOL: Semantics
+
+1   True is always true
+
+2   False is always false
+3   ¬p is true iff p is false
+    with p being a sentence, atomic or complex
+
+
+4   p ∧ q is true iff both p and q are true
+5   p ∨ q is true iff either p or q is true
+
+6   p ⇒ q is true unless p is true and q is false
+7   p ⇔ q is true iff p and q are both true or both false
+
+8   ∀ x P is true iff for all the interpretations of x in the domain model, P is
+    true
+9   ∃ x P is true iff there is at least one interpretation of x in the domain model
+    where P is true
+            To avoid falling in complex semantics, we
+            can make the following assumptions:
+
+            Unique-names assumption
+Database    Every constant symbol refers to a distinct object
+
+Semantics   Closed-world assumption
+in FOL      If we do not know a fact, than we assume it to be false
+
+
+            Domain closure
+            Each model contains no more domain elements than those named by
+            the constant symbols
+            Similarly to Propositional Logic we can TELL and
+            ASK
+
+            TELL is used to add sentences to the KB
+
+            ASK is used to ask if a sentence is true given the
+            KB
+
+Using FOL   Key difference: now we can use variables
+            and quantifiers!
+
+            When asking a query with variables, if the query is
+            true we also want to know the interpretations of
+            the variables involved for which the query is true
+            ASK(KB, IsMale(x)) should provide two answers {x/Joe} and {x/Bob}
+            This kind of answer is called binding list or substitutions
+            Note that asking if IsMale(x) is like asking if   ∃ x IsMale(x) in our KB
+   How can we make inferences in FOL?
+
+Perhaps we can try to reduce FOL to PL and
+use the same inference process used for PL...
+Reduction to Propositional Logic
+
+First, we need to get rid of quantifiers!
+An existentially quantified sentence can be replaced by one instantiation
+(substition)
+A universally quantified sentence can be replaced by the set of all possible
+instantiations
+
+
+Then, we can replace ground atomic sentences
+with propositional logic symbols
+E.g. isMale(Joe) can be replaced by JoeIsMale
+
+
+Finally, we can use any of the inference algorithms
+used for PL
+
+This technique is called Propositionalisation
+FOL is just syntactic sugar for propositional logic
+                       KB:
+                        Student(Alice)
+                        Student(Bob)
+                        ∀ x Student(x) ⇒ Person(x)
+An Example of
+                        ∃ x Student(x) ∧ Smart(x)
+Propositionalisation
+                       Propositionalisation of KB:
+                        AliceIsStudent
+                        BobIsStudent
+                        (AliceIsStudent ⇒ AliceIsPerson) ∧ (BobIsStudent ⇒ BobIsPerson)
+                        (AliceIsStudent ∧ AliceIsSmart) ∨ (BobIsStudent ∧ BobIsSmart)
+          Definite Clauses in FOL
+
+
+A more expressive type of clause than in PL...
+using quantifiers and variables:
+
+∀ x1 ∀ x2 ... ∀ xn (a1 ∧ a2 ∧ ... ∧ ak) ⇒ b
+For variables x1 ... xn and atomic formulas a1 .. ak, b containing those
+variables
+
+
+Valid examples of definite clauses:
+∀ x Student(x) ⇒ Person(x)
+∀ x ∀ y Student(x) ∧ Unit(y) ∧ Pass(x, y) ⇒ Happy(x)
+               Modus Ponens in FOL
+
+(a1, .. , ak ,      ∀ x1 ∀ x2 ... ∀ xn (a1 ∧ a2 ∧ ... ∧ ak) ⇒ b
+)⇒   b
+If we know a1, ... , ak to be true and a1, ... ak are the premise of a given implication,
+then we can infer the conclusion of the given implication
+
+
+Setup:
+P(Alice) [given]
+∀ x P(x) ⇒ Q(x) [given]
+Can we infer Q(Alice)?
+
+
+Problem:
+With the Modus Ponens above only, we cannot make this inference
+P(Alice) is not the same of P(x) (Modus ponens is just matching alike symbols!)
+Also, how can we get to Q(Alice) from Q(x)?
+
+
+Solution: substitution and unification!
+               Remember the binding lists as answers to
+               quantified queries...
+
+               SUBST({x/Alice}, P(x)) = P(Alice)
+               It substitute every variable x with the term Alice in the formula P(x)
+
+
+               Remind that a term is not only a constant
+Substitution   but it can also be a variable or function
+               SUBST({x/y}, P(x)) = P(y) is a valid substitution
+               SUBST({x/f(x), P(x)) = P(f(x)) is another valid substitution
+
+
+               Substitution: a substitution θ is a mapping
+               from variables to terms. Hence, SUBST(θ, p)
+               returns the result of performing
+               substitution θ on p
+              Idea: take two formulas, try to match them as close as
+              possible and return the substitutions that made the
+              match possible
+              UNIFY(p, q) = θ such that SUBST(θ, p) = SUBST(θ, q) or fail if such θ does not exist
+
+
+              UNIFY(P(x), P(Alice)) = {x/Alice}
+              By implementing the substitution {x/Alice} the two inputs to UNIFY will match
+
+
+              We may need more than one substitution during the
+              unification process
+Unification   E.g. UNIFY(Q(x, Bob), Q(Alice, y)) = {x/Alice, y/Bob}
+
+
+              The unification process may fail
+              E.g. UNIFY(Q(Alice, x), Q(Bob, y)) = fail ... we can only substitute variables with terms, not
+              two constants!
+
+
+              Taking the most general substitution (aka most general
+              unifier, MGU)
+              E.g. UNIFY(Q(x, y), Q(x, F(x))) = {x/z, y/F(z)} but also {x/Alice, y/F(Alice)} and {x/Bob,
+              y/F(Bob)}
+              {x/z, y/F(z)} is more general because from there we can then replace z with Alice or Bob
+         A Modified Modus Pones
+
+Now we can modify the previous Modus Ponens to find a
+solution to the problem
+
+(a'1, .. , a'k ,   ∀ x1 ∀ x2 ... ∀ xn (a1 ∧ a2 ∧ ... ∧ ak) ⇒ b
+)⇒   b'
+
+θ = UNIFY(a'1      ∧ ... ∧ a'k , a1 ∧ ... ak)
+First I unify the given premise with a grounding
+
+If there is such substitution θ I can proceed and get the
+conclusion b
+
+SUBST(θ, b) = b'
+Then I use the substitution found by the unification on the conclusion b to
+obtain b'
+             An Example of Inference in FOL
+
+
+KB:                                           Inference:
+ Student(Alice)                               1. We unify the premises of the implication:
+                                                 UNIFY(Student(Alice)  ∧         ∧
+                                                                            Unit(AI)
+ Unit(AI)
+ Pass(Alice, AI)
+                                                                            ∧
+                                                 Pass(Alice, AI) , Student(x)         ∧
+                                                                                 Unit(y)
+                                                 Pass(x, y)) = {x/Alice, y/AI}
+ ∀ x, y Student(x) ∧ Unit(y) ∧ Pass(x, y) ⇒   2. We can take the conclusion Happy(x)
+ Happy(x)
+                                              3. Now we use the substitution found by
+                                                 UNIFY: SUBST({x/Alice, y/AI}, Happy(x)) =
+                                                 Happy(Alice)
+                                              4. So we can derive Happy(Alice), i.e. KB ⊨
+                                                 Happy(Alice)
+Forward and Backward Chaining in FOL
+
+
+   In this lecture we will not go into the
+   implementation details of forward and backward
+   chaining algorithms for FOL
+
+   Simply know that with the concepts of
+   substitution and unification we can adapt the
+   forward and backward chaining algorithms we
+   used for PL to apply more generally on FOL
+
+   There are already many implementations of
+   inference algorithms for FOL that can be used
+                                    Summary (1)
+
+Logical Agents
+ Logical agents store information about the world in a Knowledge Base
+ This knowledge base can be updated with new facts (TELL) and queried to extract knowledge
+ (ASK)
+ Implementing logical agents requires to use a declarative approach
+ With logical agents, any conclusion inferred from the available information in the knowledge base
+ is guaranteed to be correct, if the information in the knowledge base is correct
+                                    Summary (2)
+
+Propositional Logic
+ Propositional logic is a language and, therefore, it has a syntax and a semantics
+ A model in logic describe the possible way to assign values to elements of the logic sentences
+ If a sentence q follows logically from a sentence p, then we say that p entails q
+ In a closed world assumption, any fact we do not know it is assumed to be false
+ In an open world assumption, any fact we do not know cannot be assigned to a specific truth value
+ The syntax of PL is made of atomic sentences and complex sentences, the latter created by using
+ logical connectors
+ The semantics of PL is determined by the truth tables of the available logic connectors
+ With the inference rules we can infer new knowledge from information available in the knowledge base
+ If the knowledge base only contains definite clauses, it is possible to use the forward and backward
+ chaining algorithms to model the inference process
+                                        Summary (3)
+
+First Order Logic
+ First Order Logic gives more expressiveness when declaring what we know from the world but also
+ offers a way to prevent ambiguities
+ The syntax of FOL is made of constants, variables, predicates, functions, connectives and quantifiers
+ A term can be a constant, variable or function
+ Atomic sentences are made of a single predicate of one or more terms, whereas complex sentences
+ use connectors and quantifiers to compose sentences together
+ The semantics of FOL is similar to that of PL but this time we are also considering the semantics of
+ quantifiers: a universally quantified sentence is true iff all the interpretations of that sentence are true,
+ whereas an existentially quantified sentence is true iff there is at least one interpretation of that
+ sentence that is true
+ Inference in FOL can be achieved via a Modus Ponens modified by using the concepts of substitution
+ and unification
+               Week 6: Reasoning Under Uncertainty
+
+               Recommended Activities for Week 5:
+What's next?    Review Chapter 7 (limited to sections 7.1 to 7.5), Chapter 8 (limited
+                to sections 8.1 to 8.3) and Chapter 9 (limited to sections 9.1 and
+                9.2) of the reference textbook
+                Complete the workshop exercises for week 5
+                Make sure you are actively working on Assignment 2 and asking
+                questions if you have any
+

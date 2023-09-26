@@ -1,0 +1,1243 @@
+Week 6:
+Reasoning Under Uncertainty
+COSC350/550
+Artificial Intelligence
+                Agenda
+
+
+
+1   Handling Uncertainty
+
+2   Probabilistic Inference
+3   Naïve Bayes Models
+
+4   Bayesian Networks
+5   Time and Hidden Markov Models
+Handling Uncertainty
+                The real-world is uncertain
+
+                Sometimes, things are not directly
+                observable, e.g. a person's mental state
+Agents in the
+Real-World      Even when an agent can make observations
+                with sensors, those measures may be noisy
+
+                Some events happen by chance, e.g. rolling
+                a 6 on a dice
+              Uncertainty in classical search strategies:
+               Perform a search with the available information so far
+               Execute the result of the search
+               When something goes wrong during the execution phase, perform a new
+               search from the current state
+
+
+              Uncertainty in adversarial search strategies:
+How did        A player does not have access to the "mind" of the opponent
+
+we handle      We considered the worse case scenario: the opponent is always
+               performing optimally
+
+uncertainty    The result is a conditional plan
+               When something goes differently, we re-evaluate the situation
+so far?
+              Uncertainty in logical agents:
+               The agent have a representation of the set of all possible world states it
+               might be in
+               The agent updates its KB every time the sensors report new information
+               from the environment
+               The agent performs an inference process and choose actions based on
+               the result of the inference process on the updated KB
+              Although logical agents can deal with some
+              levels of uncertainty, they have significant
+              limitations:
+Limitations    The agent must consider every possible model of the world and that
+
+of Logical     leads to complex and large KB
+               Sometimes, the agent ends up not having enough information to be
+Agents         sure that an action will lead to a desired outcome. Yet, the agent
+               must act
+               It may be unfeasible or even impossible to list all the necessary
+               preconditions for a real-world action to have its intended effects (the
+               qualification problem)
+                                      Example (1)
+
+LateAssignment          ⇒ LazyStudent              But this is wrong! Not all the
+We may have a logical rule stating that if the     students submitting late
+assignment was submitted late, it means that the
+student is lazy                                    assignments are lazy, some of
+                                                   them have other reasons for
+                                                   submitting the assignments late:
+                                                    they got sick,
+                                                    they had family issues,
+                                                    they have a SAP,
+                                                    they forgot about the deadline,
+                                                    internet was not working while they were
+                                                    submitting 1 second prior the deadline,
+                                                    the dog ate their assignments (or the PC broke
+                                                    down unexpectedly 1 hour prior the submission
+                                                    deadline!!!!),
+                                                    ...
+                 Example (2)
+
+
+We can try to extend the logical rule with all the
+possible explanations
+
+LateAssignment     ⇒
+                  LazyStudent        ∨
+                                  SickStudent          ∨
+FamilyIssuesStudent   ∨ SAPStudent        ∨
+ForgetfulStudent   ∨
+                   InternetIssuesStudent         ∨
+DogAteAssignment     ∨...
+
+In real life situations, we will never be able to list all
+the possible explanations to make the logical rule
+complete
+                Example (3)
+
+We can try to invert the implication and transform
+the rule into a causal rule
+
+LazyStudent   ⇒ LateAssignment
+This rule is wrong too! Not all lazy students submit
+their assignments late
+
+Again, the only way to fix this rule is to augment
+the left-hand side with all the qualifications
+required for a lazy student to ensure that the
+student will end up with a late submission:
+qualification problem
+           Listing all possible explanations to prevent
+           exceptions to the logical rules is tedious
+
+           We might not even be able to list all the
+           possible explanations because of domain
+           ignorance
+Problems
+           Even if we have all the theoretical available
+           knowledge about a domain, we might not be
+           able to draw conclusions because we did not
+           ground the rule completely (i.e. we are missing
+           information)
+Instead of just saying that something is
+ either true or false, what if we had a a
+ way to describe how much we believe
+     that something is true or false?
+
+    We can use probability theory
+            Back to the Example
+
+
+LateAssignment            ⇒ LazyStudent
+We cannot say that this rule is 100% true, but
+perhaps we can say that 70% of times (or more,
+or less) a late assignment is due to a lazy
+student
+
+How do we quantify the degree of belief?
+ Statistical data, frequencies
+ Domain knowledge
+ A hunch
+             Let's consider the rule: ToothAche                       ⇒ Cavity
+             In a real-world scenario, a patient either has a
+             cavity or not (True or False)
+             No uncertainty!
+
+
+             Stating that the logical statement above is 80%
+Real-world   probable only makes sense when referred to
+vs KB        the current state of knowledge of the world
+             i.e. the probability of a patient to have a cavity, given that they have
+             toothache, is 80%
+
+
+             If our knowledge state of the world changes,
+             the probabilities will change too
+             e.g. if we find out that the patient has also a history of gum diseases, the
+             probability of the patient to have a cavity will be lower (because the
+             toothache will probably due to other reasons, such as a gum disease)
+              How can an agent choose which action to take
+              based on its degree of belief?
+
+              The agent may have two or more options, one
+              with a higher degree of belief than others, but a
+              more probable scenario does not always imply
+Rational      a better choice
+Decisions     E.g. It's winter and it's cold. If we wear pants, a sweater, a jacket and a
+              cap we will likely be warm. Let's say 80% sure.
+Under         Alternatively, If we turn ourself on fire, we will be quite certain to be warm
+              (99%)... but that does not mean that this would be a rational decision!
+Uncertainty
+              To make rational decisions under uncertainty,
+              an agent must have preferences among the
+              different possible outcomes of the identified
+              plans
+              In the previous example, we can assume that the agent will prefer to
+              survive rather than being warm but cooked dead.
+                 Every state (or sequence of states) has a
+                 degree of utility to an agent based on their
+                 preferences
+
+Utility Theory   The utility of a state is relative to an agent
+                 (and its preferences)
+
+                 Preferences of an agent can be expressed as
+                 utilities
+                               Decision Theory
+
+
+
+
+An agent is rational if and only if it chooses the action that yields the highest expected
+utility, averaged over all the possible outcomes of the action
+
+"Expected" means "statistical mean" weighted by the probability of the outcome
+      Who loves probabilities?
+probability theory can be very helpful to handle uncertainty in many AI applications (speaking
+                                  from personal experience)
+
+
+
+
+      So let's do a quick recap
+           Logic: with a set of given logic assertions we know
+           which worlds are possible and which ones are ruled out
+           KB ⊨ FelixIsCat
+           We are sure that Felix is a cat (and with a closed-world assumption, Felix is not a dog)
+
+
+           Probability: with a set of probabilistic assertions we
+           know how probable are the considered worlds
+           P(Felix = cat) = 0.8, P(Felix = dog) = 0.2
+Possible   We are 80% confident that Felix is a cat, but it might be a dog (20%)
+
+
+worlds     In probability theory, the set of all possible worlds is
+           called the sample space
+           The space from where we can "sample" based on given probabilities
+
+
+           The possible worlds are mutually exclusive and
+           exhaustive
+           Felix can be either a cat or a dog, but not both (mutual exclusivity)
+           We are sure that Felix must be a cat or a dog. The probabilities for these two possible
+           mutually exclusive worlds sum up to 1.
+           Ω (uppercase Omega) is used to refer to the sample
+           space
+
+           ω (lowercase omega) is used to refer to elements of
+           the space, i.e. specific worlds
+
+           In our previous example, our sample space Ω is
+           limited to the worlds defined by the random variable
+Notation   Felix (the only RV we are considering right now)
+
+           The elements ω of this space are the worlds where
+           Felix is a cat (ω1: Felix = cat) and were Felix is a
+           dog (ω2: Felix = dog)
+
+           A fully specified probability model associates a
+           numerical probability with each possible world
+           E.g. P(ω1) = 0.8, P(ω2) = 0.2
+              Axiom 1. Every possible world has a probability between 0
+              and 1:
+
+
+Axioms of
+Probability   Axiom 2. The sum of all probabilities of all the possible
+Theory        worlds must sum to 1:
+         In probability theory, an event is a set of
+         possible worlds.
+
+         let's introduce another random variable
+         Fuffy. This will realise the following sample
+         space: Ω = {ω1: Felix = cat, Fuffy = cat; ω2:
+Events   Felix = cat, Fuffy = dog; ω3: Felix = dog,
+         Fuffy = cat; ω4: Felix = dog, Fuffy = dog}
+
+         An event may be that both Felix and Fuffy
+         are cats (event {ω1}), another event might be
+         that both Felix and Fuffy are the same kind
+         of animal (event {ω1, ω4}), and so on ...
+               We may ask: "How likely is that Felix and Fuffy are the
+               same kind of animals?"
+               i.e. how likely is the event {ω1, ω4}?
+
+               The above query can be posed as a logic proposition:
+               (FelixIsCat    ∧
+                           FuffyIsCat)            ∨
+                                         (FelixIsDog    FuffyIsDog)∧
+               We don't have certainty about this proposition being True or False, but we
+Events and     want to know how likely it is a world with Felix and Fuffy being two cats
+
+
+Logic          The probability of a given proposition being true is the sum
+               of all of the probabilities of the worlds in which the
+Propositions   proposition hold
+
+
+
+
+               In our example, the probability of the considered
+               proposition will be computed as P(ω1) + P(ω4)
+                Prior (or unconditional probability). The probability
+                estimated for an event without any other specific
+                information that may bias the likelihood of such event
+                E.g. P(Felix = cat) = 0.8 is a prior
+
+
+                Conditional probability (or posterior). The probability
+                estimated for an event given some additional
+Priors and      information that may bias the likelihood of such event
+Conditional     E.g. P(Felix = cat | FelixVocalisation = meow) = 1
+
+
+
+Probabilities   Information that may bias the estimation of probabilities
+                is called evidence
+
+                The evidence can also be a combination of elementary
+                propositions:
+                E.g. P(Fuffy = dog | FuffyBreed = pug   ∧ ¬FuffyVocalisation = meow)
+                The AND operator can be replaced with a comma:
+                P(Fuffy = dog | FuffyBreed = pug, ¬FuffyVocalisation = meow)
+              Conditional probabilities are defined in terms of
+              unconditional probabilities
+
+              Given two propositions a and b:
+Computing
+Posteriors
+from Priors
+              The equation above can be re-written as the product rule:
+            Random variables (RV) are denoted with
+            uppercase letters
+
+            The values that a RV can assume are
+            denoted with lowercase letters
+Random      The set of values a RV can assume is the
+Variables   range of the RV
+
+            RV can have finite or infinite ranges
+
+            RV with infinite range can be discrete or
+            continuous
+                Instead of gathering the probability of a RV when assuming
+                a single value, we can gather the set of probabilities of the
+                RV when assuming all the possible values
+
+                We call this set the probability distribution of the RV and
+                we denote it with P (in bold)
+                P(Felix) = {0.8, 0.2} (assuming the ordered set of values {cat, dog})
+
+
+
+Probability     This notation can also be used for conditional probabilities
+                E.g. P(Felix | FelixVocalisation) will return the probability values for each pair of possible values
+
+Distributions
+                of the RVs Felix and FelixVocalisation
+
+
+                For continuous variables we cannot list the probabilities for
+                each possible value of the RV. Instead, we can use
+                parametrised probability density functions (pdf) defining the
+                probability density of the RV assuming a value within a
+                given interval
+
+                Remember that the probability of a continuous RV to
+                assume a specific value is 0!
+                If we want to gather the probability
+                distribution of multiple RVs, we need to
+                specify joint probability distributions
+
+                We can denote joint probability distributions
+Joint           with commas:
+Probability                                    ∧
+                P(Felix, Fuffy) = {P(Felix = cat                             ∧
+                                                   Fuffy = cat), P(Felix = cat   Fuffy =
+                dog), P(Felix = dog ∧                              ∧
+                                         Fuffy = cat), P(Felix = dog    Fuffy = dog)}
+Distributions
+                A probability model is completely
+                determined by the joint distribution for all of
+                the random variables, the full joint probability
+                distribution
+Probabilistic Inference
+What is "inference" in probability?
+
+We start with query propositions and gathered
+evidence:
+Propositions: p, q
+Evidence: x, y, z
+
+
+We estimate the posteriors for the query
+propositions given the gathered evidence:
+P(p | x, y, z)
+P(q | x, y, z)
+
+
+This process will answer:
+"What's the probability that p is True given the evidence x, y, z?" and
+"What's the probability that q is True given the evidence x, y, z?"
+What is the "KB" in probability?
+
+In a probabilistic model we cannot store true
+facts in a KB as we have seen with logical
+agents. We are not using logic.
+
+However, we can represent our knowledge
+about the world as the full joint probability
+distribution of our model
+
+By knowing the full joint probability distribution,
+we simply list the worlds for which the
+proposition holds and sum their probabilities
+obtained from the full joint probability
+distribution
+                                            Example
+
+Let's consider a probabilistic model describing       We start with no evidence and we ask how likely
+the roll of two dice with 6 faces (and assuming       is that the sum of the two dice will be equal to 5.
+they are balanced)                                    This event will be true when the values of the
+                                                      two dice will be either (1,4), (2, 3), (3, 2), (4, 1).
+This model will consist of two RVs: Die1 and          q: P(sumToFive) = 4/36 = 1/9
+Die2
+                                                      Now, let's say that the first die produced a 3.
+The "KB" for this model is the full joint             How likely is our query now?
+probability distribution P(Die1, Die2)                The possible event leading to the desired sum is
+                                                      only Die2 = 2, which is 1 of the possible 6
+Each die has 6 faces, so we can represent all         outcomes for Die2. Therefore:
+the possible events for rolling two dice as a 6x6     q: P(sumToFive | Die1 = 3) = 1/6
+table, with each cell the probability for the two
+dice to produce the considered outcome.               If instead our evidence was Die1 = 6, then:
+Therefore P(Die1, Die2) = (1/36, ..., 1/36) [a 1x36   q: P(sumToFive | Die1 = 6) = 0
+vector with values 1/36]                              Because no matter what the roll of the second
+                                                      die, we are sure that this query will never be true
+           Full joint probability distribution table
+
+
+           Die1 = 1   Die1 = 2   Die1 = 3   Die1 = 4   Die1 = 5   Die1 = 6
+
+Die2 = 1    1/36       1/36       1/36       1/36       1/36       1/36
+
+Die2 = 2    1/36       1/36       1/36       1/36       1/36       1/36
+
+Die2 = 3    1/36       1/36       1/36       1/36       1/36       1/36
+
+Die2 = 4    1/36       1/36       1/36       1/36       1/36       1/36
+
+Die2 = 5    1/36       1/36       1/36       1/36       1/36       1/36
+
+Die2 = 6    1/36       1/36       1/36       1/36       1/36       1/36
+                                            Marginal Probability
+                                              The probability of a subset of RVs
+                           Example, we want to calculate the marginal probability P(Die1):
+                         SUM[ P(Die1, Die2 = x) ] for x in [1, 6] = (1/6, 1/6, 1/6, 1/6, 1/6, 1/6)
+Essentially, we squashed the table to remove the undesired RVs and summed up the probabilities of the
+                                  squashed rows during the process
+                                            This process is called "marginalisation"
+
+
+
+
+                                              Die1 = 1     Die1 = 2    Die1 = 3    Die1 = 4    Die1 = 5    Die1 = 6
+
+
+ SUM[ P(Die1, Die2 = x) ] for x in [1, 6]       1/6          1/6         1/6           1/6           1/6     1/6
+                  Formally, the marginalisation of a RV Y for a model
+                  considering RVs Y and Z can be computed as:
+
+
+
+Equations for
+Marginalisation   We can re-write the previous equation by using the
+                  product rule to obtain the conditioning rule:
+                We have already seen how to compute a conditional
+                probability with the equation:
+
+
+
+
+                What's interesting in this equation is that P(Z) is a
+                normalisation factor and therefore P(Y | Z) is proportional to
+Normalisation   P(Y, Z):
+
+
+
+
+                In most cases, we do not need to know P(Z) to estimate
+                P(Y | Z). If we can calculate the relative proportions P(Y, Z)
+                for all the possible values Y can assume, we can then
+                estimate P(Y | Z) by normalising them to sum to 1
+                                                            Example
+Let's say that we want to calculate the posterior for P(cavity |
+toothache)
+
+P(cavity | toothache) = α P(Cavity , toothache)
+= α [ P(Cavity, toothache, catch) + P(Cavity, toothache, ¬catch) ]
+= α [ <0.108, 0.16> + <0.012, 0.064> ] = α <0.12, 0.08>
+
+Now we can find the value for α that will make our relative
+proportions to sum to 1
+α = 1 / (0.12 + 0.08) = 5 (and therefore, P(toothache) = 0.2)
+
+Hence, P(Cavity | toothache) = <0.6, 0.4>, i.e. 0.6 for cavity and 0.4
+for ¬cavity
+(Note the capital letter for Cavity, signifying the RV Cavity rather than
+the value cavity)
+
+In general, the inference procedure for a query X given evidence e
+and unobserved variables Y is:
+               If we only have discrete RVs, having a full join
+               distribution table allows us to any query about the
+               considered problem
+
+               Unfortunately, if the problem consider n RVs, even
+               if these RVs are simple Boolean variables (i.e. only
+Full Joint     two values), the space complexity of the table will
+Distribution   be O(2n)
+Tables         The time complexity to process the table will be
+Complexity     exponential as well
+
+               The problem is not only the size of the table and
+               the time needed to process it, but also how to
+               estimate the single priors!
+               For each RV we will need a high number of examples to estimate its prior
+               This is a similar challenge to what we already experienced with the MCTS
+               Two random variables are independent if the realisation of
+               one does not affect the probability distribution of the other:
+
+
+
+
+The Concept    Example, two dice:
+of
+Independence
+               The probability distribution of rolling the Die1 is independent from what we
+               get from rolling Die2. Every face of Die1 will have probability 1/6,
+               independently from what we will get from Die2.
+
+               Knowing about independency of RVs helps reducing the
+               complexity of the inference problem.
+Naïve Bayes Models
+              We start from the product rule. We can write it in two
+              forms:
+
+
+
+
+              We can equate these two forms and divide them by P(X),
+              thus obtaining:
+Bayes' Rule
+
+              This is known as Bayes' rule
+
+              A Bayesian model is a statistical model that incorporates
+              Bayesian probability theory to represent uncertainty and
+              make probabilistic inferences
+       Why is this rule helpful?
+We are seeking for P(Y | X) and now to answer this query we need to seek for three additional
+                        pieces of information: P(X | Y), P(Y) and P(X)!!!
+            We can review Bayes' rule in the context of studying the cause
+            and effect of events:
+
+
+
+
+            In most real-life situations, we observe some effects (evidence)
+            and we want to answer if those observation can justify some
+Cause and   other variables as the cause (e.g. when diagnosing illnesses)
+
+Effect      Normally, we have ways to estimate the priors for effects (e.g.
+            symptoms) and causes (e.g. illnesses) and we can also estimate
+            the likelihood of observing effects due to specific causes (e.g.
+            the incidence of a symptom given an illness):
+          Case study: Meningitis
+
+
+
+
+Example   What is the probability of being sick from meningitis given a stiff
+          neck?
+                    Normalisation in Bayes' rule
+
+We can avoid to compute the prior of observing an effect (P(X)) and instead use the same
+approach we used when normalising probabilities:
+
+
+
+
+Therefore
+
+
+
+
+In other words, we are marginalising the RV X to find alpha...
+
+...but in order to do so, we need to know P(X|y) for all values of RV Y. No free lunch!
+           but why not simply estimating
+       P(Y | X) from frequencies of the event?
+
+ If we estimate P(Y | X) directly from data, we are "compressing" information without a way to
+  update it in future in case something would change to the underlying "patterns" in our data
+              informing about the likelihood of a cause given the observed effects.
+
+ The world evolves, it's dynamic. We may observe some patterns at time t, but these patterns
+  may change at time t+n. Because their frequency changes, the estimated causes given the
+                            observed effects should change as well.
+
+If instead we compute P(Y | X) based on a model making use of priors and likelihoods, we will be
+sure that in case the underlying "patterns" in our data should change, our diagnostic will change
+                                           accordingly.
+                                          Conditional Independence
+What happens when we want to ask a query given more than one piece of evidence?
+
+
+
+
+But now we need to know the posteriors for the conjunction of the two pieces of evidence! This may be possible, but when we add
+more and more evidence, this will become more and more challenging
+
+It would be nice if Toothache and Catch were independent, but if the patient has a cavity it is likely that the patient will suffer both of a
+toothache and the probe will catch the cavity, i.e. Toothache and Catch are not fully independent.
+
+However, these RVs are independent GIVEN the presence or not of a cavity in the patient. Both RVs are directly caused by the
+presence of a cavity but none of them has a direct effect on the other
+The toothache does not affect the likelihood of the probe catching the cavity and the ability of the dentist in catching the cavity with the probe does not affect the
+patient's toothache
+
+
+Hence, Toothache and Catch are conditionally independent given Cavity:
+                   Joint Distribution Decomposition
+
+Now we have:
+
+
+
+
+Therefore, starting from the full joint distribution we can decompose it:
+
+
+
+
+Now, instead of a big single table, we need only three smaller tables to provide a full joint distribution
+for the considered scenario
+
+In general, for a scenario with n conditionally independent RVs used as evidence, the size of the table
+grows as O(n) instead of O(2n) (assuming boolean RVs)
+                                  Naïve Bayes Models
+
+Generally speaking, when we have a single cause directly influencing a set of effects, all
+of which conditionally independent given the cause, then we can specify the full joint
+probability distribution as:
+
+
+
+
+This probability distribution is called naïve Bayes Model
+The word "naïve" comes from the idea that these models often makes the assumption that the effects are strictly
+independent given the cause, but this may not be the case in reality
+However, even if that's not the case, these model works well in most cases, even if the conditional independence
+assumption is not strictly true
+
+Naïve Bayes models were successfully used for classification tasks (among other tasks)
+                                        Chain Rule
+
+The previous formula is a simplified version of another formula that we can use to estimate any
+joint distribution of not necessarily independent RVs (i.e. not necessarily a cause influencing
+conditionally independent effects)
+
+Given the product rule, we can write:
+
+
+
+
+Now it's easier to see that the Naïve Bayes model formula is a special case of the chain rule,
+where the effects are conditionally independent from the cause and, therefore, we can remove
+unnecessary variables from the product process
+Bayesian Networks
+                                    Bayesian Networks
+
+
+
+A directed acyclic graph (no cycles!) with the following characteristics:
+  Each node correspond to a single RV. The RV can be discrete or continuous.
+  Arrows (directed links) connects pairs of nodes. If there is an arrow from X to Y, then X is said to be parent of Y
+  Each node Ni corresponding to a RV Xi has associated probability information P(Xi | Parent(Ni).RV ) that quantifies
+  the effects of the parents on the node
+
+Hence, the topology of the network specifies the conditional independence relationships
+that hold in the considered domain
+Causes nodes are parents of Effects nodes
+Effects nodes do not have direct links but they may share the same parent: conditionally independent
+                                                         Example
+
+
+A new burglar alarm installed
+
+It can activate because of a real burglary
+or due to an earthquake
+
+The neighbours John and Mary will call if
+they hear the alarm
+John nearly always hear the alarm
+
+Mary is a bit old and deaf from one ear,
+so she may not hear it
+
+Notice how the model of this domain is
+very much simplistic w.r.t. amount of
+variables in the real world that can affect
+the outcomes
+But we don't care, as long as the probabilities in the
+considered RVs somehow summarise them well
+                 Bayesian Nets as Full Joint Distributions
+
+   Let's demonstrate that this Bayesian Network is a representation of the Full Joint Distribution for the
+   considered domain:
+
+
+
+
+Using the product rule:
+
+
+
+
+But we know that JohnCalls is conditionally independent from MaryCalls given Alarm and given Alarm (as evidence) we don't need to
+know about Burglary or Earthquake anymore, JohnCalls will only depend on the Alarm:
+
+
+
+
+Continue...
+                                               ...continue
+
+We apply the product rule again on the joint distribution P(M, A, B, E):
+
+
+
+
+But again, MaryCalls is conditionally independent from Burglary and Earthquake given Alarm:
+
+
+
+
+Another round of the product rule on P(A, B, E):
+
+
+
+
+Continue...
+                                            ...continue
+
+
+
+This time, we cannot simplify P(A|B, E) because Alarm conditionally depend on both Burglary and Earthquake.
+We can proceed with the product rule on P(B, E):
+
+
+
+
+However, now Burglary is independent from Earthquake:
+
+
+
+
+This is exactly what we got from the Bayesian Network in the example. Therefore, our network gives a
+representation of the full joint distribution for the considered domain.
+          The order is important!
+If we choose a different order of the RVs when trying to build a Bayesian Network, we will build
+                                   one with a different topology
+
+  However, the network will still represent the full joint distribution for the considered domain
+                                     Let's try a different order
+
+
+
+First round of the product rule:
+
+
+
+
+Is Earthquake conditionally independent from Burglary given the rest or RVs? Not really, if we know Alarm (or MaryCalls, JohnCalls) we
+can increase or decrease the likelihood that an earthquake happened, but knowing if a burglary happened or not will also increase or
+decrease the likelihood of an earthquake.
+What if we know both Burglary and Alarm? In that case yes, because if we know Alarm, we don't need to know MaryCalls or John Calls
+(we know the real state of the alarm) and given Burglary too, we have all the piece of information to derive our likelihood:
+
+
+
+
+Continue...
+                                             ...continue
+
+
+
+
+Second round of the product rule:
+
+
+
+
+Is Burglary conditionally independent from MaryCalls and JohnCalls given Alarm? Yes, if we know the state of the
+alarm, we don't need to know if Mary or John called.
+
+
+
+
+Continue...
+                                               ...continue
+
+
+
+Third round of the product rule:
+
+
+
+
+Is Alarm conditionally independent from MaryCalls and JohnCalls? No. If we know if either Mary or John called, the
+likelihood of the alarm being off or on will change accordingly.
+So next product rule:
+
+
+
+
+Does MaryCalls conditionally depend on JohnCall? This time we don't have the evidence from Alarm, therefore, Yes,
+knowing if John called or not will increase or decrease the likelihood that also Mary would call
+                Causal vs. Non-Causal (diagnostic)
+
+
+
+
+This version is more compact                More links, less compact
+It is also easier to gather the necessary   More difficult to understand the conditional
+statistics for the CPTs                     relationships
+                        A Note on the Ordering
+
+
+The reference textbook recommends an order of the RVs where the RVs represented
+causes precede those representing effects
+
+In the previous example we used an inverted order (first the effects, e.g. JohnCalls, and
+then the causes, e.g. Burglary)
+
+The inverted order on the slides works to generate a causal net because we then used
+the product rule in the inverted direction:
+
+
+
+
+Reason: I find this "inverted" execution of the product rule more intuitive
+             Assuming conditional independences among RVs, we
+             are reducing the connectedness of the network
+             The graph is a sparse graph
+
+
+             Hence, each node will be influenced by a limited
+             number of parent nodes, let's say a maximum of j
+             nodes
+Bayesian     Considering boolean RV, each node will have to store,
+Nets         at most, 2j numbers in their CPT
+
+Complexity   If the network consists of n nodes, the whole network
+             will end up with a O(2jn) space complexity
+             Whereas the full joint distribution table has a space complexity of O(2n)
+
+
+             For this reason, it is best to leave out links between
+             nodes even if there might be a bit of dependency
+             between the two RVs. If that's done properly, it will not
+             impact much on the computed posteriori
+          From a Bayesian net, we can derive a general way to
+          identify the conditional independence property of nodes
+
+          We already seen that if we already know about the
+          parents of a node, than that node will become
+          conditionally independent w.r.t. the other predecessors.
+Markov    More generally, each RV is conditionally independent of
+Blanket   its non-descendants, given its parents
+
+          And as a stronger rule, a RV is conditionally
+          independent of all other nodes in the network, given its
+          parents, children, and children’s parents
+
+          The set parents, children and children's parents of the
+          considered node is called the node's Markov Blanket
+Example
+     Inference in Bayesian Networks
+
+Two options:
+
+
+ 1   Exact inference: we compute the exact
+     probability values
+ 2   Approximate inference: we approximate the
+     probability values given a sampling or
+     simulation technique
+
+In this lecture we will focus on exact inferences
+However, you can find details about approximate inference
+methods in section 13.4 of the reference textbook
+(recommended reading, not assessed)
+                  Types of Queries in BN
+
+  Marginal probability query: P(X)
+  E.g. P(Alarm)
+  What is the likelihood of the alarm to get activated or not?
+
+  Conditional probability query: P( X | E = evidence )
+  E.g. P(Burglary | MaryCalls = True)
+  What is the likelihood that there is a burglar in our unit given Mary calling?
+
+  Maximum a posteriori probability (MAP) query: MAXx P( X = x | E = evidence )
+  E.g. Maxb in {True, False} P(Burglary = b | MaryCalls = True)
+  It is more likely that there is a burglar in our unit or not given that Mary called?
+
+
+In general, to answer those queries we need to compute the whole probability
+distribution of a (set of) variable(s) X given the instantiation of a set of evidence
+variables E
+  We can compute the joint distribution for the set of variables X by summing over
+  the variables not involved in the query (those for which we do not have evidence)
+                             Example of Exact Inference
+
+   We want to ask
+
+
+
+We can start from the full joint distribution and marginalise the RVs not involved in the query:
+
+
+
+
+Note how each factor can be computed by looking at the CPTs of the nodes in the Bayesian Network
+                                                                      A Note
+
+   Note the factors in the sum for the values of M and J
+
+
+
+
+We are computing a vector <P(A = True), P(A=False)> by marginalising the other RVs
+SUMj[P(J = j | A)] will give the vector <1, 1> (for A = True, A = False)
+
+Similarly, SUMm[P(M = m | A)] will give the vector <1, 1> (for A = True, A = False)
+
+Hence, in this example these two factors are irrelevant (their product will result in vector <1, 1>) and the equation can be further simplified as:
+
+
+
+
+   In general, every variable that is not an ancestor of a query variable or evidence variable is irrelevant to the query and
+   it can be removed before evaluating the query.
+                                  And for conditional queries?
+  Let's say that we want to ask
+
+
+
+
+We can compute the posteriori by making use of the Bayes rule and then proceed as before:
+          How to simplify this computation further?
+
+
+We can use the Variable Elimination Algorithm
+
+In summary, given a specific factor, we can compute it once and store it's result for later
+
+
+
+
+We can compute a factor fi(A) = P(M=True | A=a) as a function of A:
+ M is given, what's variable in P(M=True | A=a) is A, therefore the factor fi(A) is a matrix listing all probabilities based
+ on the two possible values of A, hence a two-elements vector
+
+We can proceed to do the same for the rest of the factors and then use a simple
+element-wise product operation between the obtained matrix factors
+               If in the network there is at most one
+               undirected path between any two nodes of
+               the network, the network is called singly
+               connected or polytree
+Complexity     For a polytree network, the time complexity
+of the Exact   of the exact inference is linear in the size of
+               the network
+Inference
+               For a multiply connected network (i.e. not
+               polytree), the time and space complexity in
+               the worst case scenario is exponential in the
+               size of the network
+Time and Hidden
+ Markov Models
+   How can we extend the
+structure of Bayesian Nets to
+include the concept of time?
+                 Let's consider a set of RVs X at time t
+
+                 We then move to a state t+1
+
+                 We can say that:
+Time in
+probability
+theory        In other words, the probability distribution of the considered RVs at time t+1
+              depends on the probability distribution of the considered RVs at previous
+              times
+
+                 Problem: the more we transition the model to new states at
+                 different times, the higher the complexity becomes
+                Solution: we can assume that the information about all the
+                past states is somehow "compressed" in the information we
+                have from the last state (or a subset of past states)
+
+                i.e. we can say that:
+
+
+
+
+Markov       The probability distribution of X at time t+1 is conditionally independent from
+             that of times t-1 ... 0 given X at time t
+
+Assumption      This assumption is called Markov Assumption and
+                processes satisfying this assumption are called Markov
+                processes or Markov chains
+
+                The Markov assumption can be made on any finite fixed
+                number of previous states >= 1. So we can also consider
+                two past states, three past states and so on
+
+                Normally, first-order Markov processes (i.e. only one past
+                state) suffice in most practical scenarios
+                 We also assume that the laws governing the considered domain
+                 does not change over time. In other world, we set the CPTs for the
+                 transition model (i.e. P(Xt | Xt-1) ) only once and we use it for all the
+                 state transitions.
+
+                 This class of processes is called time-homogeneous processes
+                 Finally, we also make a Markov assumption on the evidence we
+                 collect from the agent's sensors:
+
+
+Additional
+assumptions   P(Et | Xt) defines the sensor model in a Markov process, also called observation model or
+              emission model
+
+                 Hence, a Markov process can be defined starting from the CPTs at
+                 time t=0 P(X0) and adding the CPTs for the transition model and the
+                 observation model:
+                                Hidden Markov Model
+
+An Hidden Markov Model (HMM) is a temporal probabilistic model in which the state of
+the process is described by a single, discrete random variable
+
+If the state of the process includes more state variables, we can "wrap" them into a
+single "megavariable", i.e. a vector
+E.g. in a social deduction game, we may have n players, each one assigned to a role from a set possible roles
+hidden to us
+
+
+
+
+The state variable can be represented as n-dimensional vector with each vector item assuming value as one of the
+possible k roles
+                                                    Example
+                                                          We start from the state at time X0 and each new
+                                                          state is dependent from the previous state. The
+                                                          state is hidden.
+
+                                                          At each time t, we can observe evidence Et that is
+                                                          dependent only on state Xt
+
+
+In this example, the state is defined by a single
+RV rain: it is raining or not
+
+We don't know if it is raining or not. We are
+inside a building with no windows and no way to
+observe the weather. There is a 70% chance that
+it is going to be a rainy day if it has been raining
+the day before and a 30% chance otherwise.
+
+Each day we can observe a person coming in the
+room with or without an umbrella (evidence).
+There is a 90% chance that it is raining outside if
+the person comes with the umbrella and 10%
+otherwise.
+                    Inference in Temporal Models
+We have different types of inferences that we can perform with temporal models:
+
+ Filtering (state estimation)                           Smoothing
+ We want to estimate the current state given the        We want to estimate a past state at time k
+ evidence collected so far: P(Xt | E1:t)                given all the evidence collected so far at time t,
+ E.g. A robot with noisy sensors that given the noisy   with k < t: P(Xk | E1:t)
+ readings wants to estimate its correct location
+                                                        E.g. The same robot in the filtering example
+                                                        that now wants to estimate again a past state
+ Prediction                                             given more evidence
+ We want to predict the future state t+k given
+ the evidence collected so far: P(Xt+k | E1:t)          Maximum a posteriori (MAP):
+ E.g. A crowd prediction model for a subway             We want to find the sequence of states that
+ system that wants to predict the crowd flow            most likely occurred given the observed
+ (low, medium, high) for the following day given        evidence: argmaxX1:t P(X1:t | E1:t)
+ the number of period ticket subscriptions              E.g. Given all the sensor data collected so far,
+ bought so far, the day of the week and the             the robot wants to estimate the most likely
+ weather of the last three days                         path taken
+                     Filtering with recursive estimation
+
+Idea: we compute the new estimate iteratively starting from the estimation computed for time t given the evidence
+collected so far and then we update this estimate with the new evidence collected at time t+1 using a function f
+
+
+
+
+This can be re-written as:
+
+
+
+
+The first factor is the update step using the sensor model, the sum factor is the prediction step achieved by
+multiplying the transition model with the filtered estimate at time t (recursive estimate)
+                                  Prediction
+
+
+
+
+Idea: we compute the new estimate iteratively starting from the estimation computed for
+the time t given the evidence collected so far. However, we do not update with the new
+evidence (as we do not have it yet):
+                                              Smoothing
+
+Idea: we filter up to time k (forward pass), we then go backward from time t to time k+1 to estimate the likelihood of
+observing the set of evidences ek+1:t given the state Xk:
+
+
+
+
+Where the factor bk+1:t is a backward pass function that can be computed as:
+
+
+
+
+The first factor is the sensor model, the second one is a recursion step and the third one the transition model
+                         Model representation with matrices
+Assume that the discrete state RV Xt can assume value among S possible states. The transition model can be represented as a matrix S x S with each item
+T ij of the matrix storing the probability of transitioning from state i at time t to state j at time t+1
+
+
+
+
+At each state t we can observe the value of the evidence et. The probability of observing that value et depends on each possible state S. For mathematical
+convenience, at each time t, we can represent the sensor model as an S x S diagonal matrix Ot. Each ith diagonal entry of Ot is:
+
+
+
+
+Therefore, the prediction equation obtained before can be re-written with matrix-vector operations:
+
+
+
+
+Whereas, the smoothing equation can be re-written as:
+                               Maximum a posteriori
+
+
+Idea: we represent the problem of finding the sequence of states maximising the
+probability of observing the evidence collected so far as a path search problem:
+ Each node is a possible state at a given time t and from there we can transition to a new state for time t+1
+ The likelihood of a path along the generated graph can be computed as the product between the transition
+ probabilities and the probabilities of the given observations at each state
+ The solution to this search problem is the path with the highest likelihood
+
+There is an algorithm implementing this idea and performing in a linear time: the Viterbi
+Algorithm
+
+In this lecture we are not covering the implementation details of the Viterbi algorithm (but
+you can find them on the reference textbook). It's just important you understand the
+underlying idea of this algorithm (i.e. searching the path with higher likelihood)
+ A visual example of the Viterbi Algorithm
+
+
+
+
+Transition model: P(Xt | Xt-1 = True) <0.7, 0.3>, P(Xt | Xt-1 = False) <0.3, 0.7>
+
+Sensor model: P(Umbrellat | Xt = True) <0.9, 0.1>, P(Umbrellat | Xt = False) <0.2,
+0.8>
+                                            Summary (1)
+
+Handling Uncertainty                                       Probabilistic Inference
+ Assigning a truth value to a proposition may not be        Given a set of propositions X and a set of collected
+ possible when we are not sure if such proposition is       evidence E, a probabilistic inference process
+ 100% true                                                  computes the probability P(X | E)
+ Instead of assigning a truth value, we can assign a        The knowledge of a probabilistic model is stored as a
+ degree of belief that the proposition is true by using     full joint probability distribution of its RVs
+ probability theory                                         A marginal probability is the joint probability
+ A rational agent acting under uncertainty must have        distribution of a subset of the model's RVs
+ preferences among the different options to make            Two random variables are independent if the
+ rational decisions. Preferences can be expressed as        realisation of one does not affect the probability
+ utilities.                                                 distribution of the other
+ Decision theory is the combination of probability
+ theory and utility theory. Hence, this lecture included
+ a brief recap on probability theory
+ A probability model is completely determined by its
+ full joint distribution
+                                      Summary (2)
+
+Naïve Bayes Models
+ Bayesian models are models incorporating Bayesian probability theory to represent uncertainty and
+ make probabilistic inferences
+ The Bayes' rule is defined by the equation: P(Y | X) = [P(X | Y)P(Y)] / P(X)
+ The Bayes' rule can be further simplified as: P(Y | X) = alpha P(X | Y)P(Y) with alpha being a
+ normalisation factor
+ If two or more RVs are independent given some evidence, then we can say that the considered RVs
+ are conditionally independent
+ Conditional independence is useful to simplify the computation of the full joint distribution
+ When we have a single cause directly influencing a set of effects, all of which conditionally
+ independent given the cause, we can use a Naïve Bayes model to easily compute the full joint
+ distribution
+ Naïve Bayes models are a special case of applying the chain rule to determine the full joint distribution
+                                    Summary (3)
+
+Bayesian Networks
+ Bayesian networks are directed acyclic graphs representing the RVs of the model, their conditional
+ dependencies, and assigning to each node a conditional probability table
+ A Bayesian network is a representation of the full joint distribution for the considered model
+ When building a Bayesian network, the chosen order of processing the RVs via the product rule will
+ determine the topology of the network
+ Bayesian networks produced by following a causal order are more compact and it is easier to estimate
+ the conditional probabilities for their nodes
+ The Markov Blanket of a RV represented by a node of the Bayesian network is the set of its parents,
+ children, and children's parents
+ A RV is conditionally independent from all the other RVs of the model given its Markov Blanket
+ On a Bayesian network we can perform an exact inference or an approximate inference
+ An effective algorithm for exact inference is the Variable Elimination Algorithm
+                                              Summary (4)
+
+Time and Hidden Markov Models
+ Time in a probabilistic model can be modelled as a conditional dependency between the past states and the current state
+ The Markov assumption states that the probability distribution of a state X at time t+1 is conditionally independent from that
+ of times t-1 ... 0 given X at time t
+ When the laws governing the transition probabilities between a state at time t and another state at time t+1 do not change
+ in a model, this model is called time-homogeneous process
+ A transition model defines the probabilities of transitioning from one state at time t to another at time t+1
+ A sensor model (or emission model) defines the probabilities of observing an evidence at time t given the state at time t
+ An Hidden Markov Model (HMM) is a temporal probabilistic model in which the state of the process is described by a
+ single, discrete random variable
+ In a HMM the value of the state cannot be observed directly and only the evidence can be used to indirectly infer the value
+ of the hidden state
+ Inference in a temporal model, including HMM, can be performed by filtering, predicting, smoothing, and computing a
+ maximum a posteriori (MAP)
+               Week 9: Learning
+               After the mid-term break
+
+
+               Recommended activities for Week 6:
+                 Review Chapter 12 (limited to sections 12.1 to 12.6), Chapter 13
+What's next?     (limited to sections 13.1 to 13.2.1 and 13.3, with 13.4 only
+                 recommended) and Chapter 14 (limited to sections 14.1 and 14.3)
+                 of the reference textbook
+                 Complete the workshop exercises for week 6
+                 Continue working on Assignment 2 during the mid-term break and
+                 make sure to submit it by the end of the mid-term break
+                 If you have questions, please use the forum or send me an email
+

@@ -1,0 +1,452 @@
+Week 10:
+Biologically Inspired
+Models of AI
+COSC350/550
+Artificial Intelligence
+                Agenda
+
+
+
+
+1   Psychology and Anatomy of Intelligence
+2   Artificial Neural Networks
+
+3   Training Artificial Neural Networks
+Psychology and Anatomy
+ of Human Intelligence
+            Cognition: “Those processes by which the
+            sensory input is transformed, reduced,
+            elaborated, stored, recovered, and used”
+            (Neisser, 1967, 2014, page 4)
+
+            Not the only definition of cognition, but one
+Human       of the first
+Cognition   It stresses the central role of sensory input.
+            However, that does not limit to external
+            stimuli
+             Mental images
+             Hallucinations
+             Proprioceptive stimuli
+             ...
+            Cognition arises from the interaction of three levels
+
+            Perceptual level: Senses external stimuli
+            (exteroception) and internal stimuli (interoception
+            and proprioception)
+
+            Cognitive level: Processes the gathered stimuli
+Levels of   and transform them into appropriate mental states
+Cognition   Behavioural (motor) level: Executes actions based
+            on the active mental states and motivational
+            factors
+
+            Not so different from what we investigated so far
+            with intelligent agents
+            Sensors, actuators, agent program
+            Generative process:
+
+
+
+            X: Mental states (normally unobservable)
+            generate
+            Y: Behaviour (normally observable)
+            E.g. A happy mental state would generate a smile or a laugh
+
+Cognitive   Inferential process:
+
+Processes
+            Y: Observable physical event (including the behaviour of others)
+            can be used to infer
+            X: Mental states
+            E.g. By observing a person smiling, we can infer that the person is happy
+
+            Again, not so different from what modern AI models are doing
+            Critical element: the internal mental representation X
+            The brain oversees functions such as
+            thinking, memory, emotions, tactile
+            sensations, physical coordination, eyesight,
+The Human   respiration, body temperature, appetite, and
+            all bodily processes.
+Brain
+            The brain allows the creation, storage and
+            retrieval of mental representations that can
+            be used during cognitive processes
+Human Brain Anatomy
+
+
+                                         Gray matter: outer part of
+                                         the brain
+                                         Primarily composed of neuron somas
+                                         Responsible for processing and
+                                         interpreting information
+
+                                         White matter: inner section
+                                         underneath the gray matter
+                                         Primarily composed of neuron axons
+                                         Responsible for transmitting
+                                         information to other parts of the
+                                         nervous system
+
+        Source: Johns Hopkins Medicine
+The Human Neuron Anatomy
+
+                                Cell Body (Soma)
+                                Main part of the neuron processing information and
+                                supporting the overall functioning of the cell
+
+                                Dendrites
+                                Branching projections that extend from the cell body. They
+                                receive incoming signals from other neurons and transmit
+                                these signals toward the cell body
+
+                                Axon
+                                Long, slender projection that extends from the cell body and
+                                is responsible for transmitting signals away from the cell
+                                body
+
+                                Axon Hillock
+                                Region where the axon originates from the cell body. It
+                                plays a critical role in determining whether the neuron will
+                                fire an action potential in response to the incoming signals
+                                from dendrites
+
+                                Synaptic Terminals
+                                At the end of the axon, these terminals form synapses allow
+                                for the transfer of signals from one neuron to another.
+            Source: Wikipedia
+            Each single human neuron can't do much
+            Simple input-output computation "machine"
+
+
+            But the human brain consists of 100 billion
+            neurons and over 100 trillion synaptic
+The Power   connections!
+
+of Many     The interactions between these neurons is
+            what enables human cognition
+
+            We well understand how a single neuron
+            works but still struggle to understand the big
+            picture (interactions)
+Artificial Neural Networks
+               Building block of artificial neural networks
+
+               Structure:
+               Input: this is similar to the dendrites in a biological neuron, an artificial neuron
+               takes multiple input values.
+               Weights: each input is associated with a weight, just as synapses between
+               neurons in the brain have varying strengths. These weights signify the importance
+               of each input in influencing the neuron's output. A higher weight means the input
+               has a stronger impact on the neuron's activation.
+Artificial     Summation: the weighted inputs are summed up within the artificial neuron. This
+               step is analogous to the integration of signals in the cell body of a biological
+Neuron         neuron.
+               Activation Function: after summation, an activation function is applied to the
+(Perceptron)   summed value. This function determines whether the artificial neuron should "fire"
+               or not, based on the input it received. The activation function mimics the threshold
+               or firing mechanism found in the axon hillock of a biological neuron.
+               Bias: similar to a biological neuron having a baseline firing threshold, an artificial
+               neuron often includes a bias term. This bias shifts the activation function's
+               decision boundary.
+               Output: the output of the activation function represents the artificial neuron's
+               response. It can be thought of as the equivalent of the action potential in a
+               biological neuron. The output may propagate to other artificial neurons in
+               subsequent layers of the neural network or serve as the final result of a prediction
+               or classification task.
+                                       Mathematical Model
+
+
+An artificial neuron (perceptron) k with N inputs, can be expressed mathematically with
+the equation:
+
+
+
+
+Where
+ak is the output of the neuron k, the activation of the neuron k
+xi is the ith input for the neuron k
+wki is the weight for the ith input of the neuron k
+bk is the bias of the neuron k
+phi is the activation function
+                             Bias as a Weight
+
+
+We can further simplify the model by removing the explicit bias variable and replace it
+with an additional weight at index 0 multiplied for an input xj = 1
+
+
+
+
+This equation can be conveniently re-written in vector form:
+                                              Activation Function
+
+There are many examples of activation functions that can be used for an artificial neuron:
+ Sigmoid function: f(v) = 1/(1 + exp(-v))
+ ReLu: f(v) = max(0, v)
+ Tanh: f(v) = (exp(2v) - 1) / (exp(2v) + 1)
+ ...
+
+We can use any function we want as activation function, however differentiable functions are preferred (and
+used) because they can be more easily used for training
+             An Artificial Neural Network (ANN) is
+             specified by:
+Artificial    Neuron model: what we have seen just before. The choice of
+              activation function determines the neuron model.
+Neural        An architecture: a set of neurons and links (with weights) connecting
+              them
+Network       A learning algorithm: used to train the network by changing the
+              values of the weights so that given an input at the first layer of the
+              network, the network will output the desired output value at the last
+              layer of the network
+Single Layer Feed-Forward Network
+
+
+                   A layer of input neurons
+
+                   A layer of output neurons
+
+                   Nothing in between
+
+                   Simplest ANN architecture. It can only
+                   model linearly separable functions.
+                   Examples of linearly separable functions:
+                   AND, OR
+                   Example of non linearly separable function:
+                   XOR
+XOR function
+Multi Layer Feed-Forward Neural Networks
+
+
+                    In addition to the input and
+                    output layers, we have 1 or more
+                    hidden layers in between
+                    Hidden nodes do not directly
+                    receive inputs nor sends outputs
+                    to the external environment
+
+                    This architecture can learn non
+                    linearly separable functions (if the
+                    activation function is non-linear)
+                    A function f is linear iff for any a, b, x, y
+                    f(a*x + b*y) = a*f(x) + b*f(y)
+Recursive Neural Networks
+
+
+
+                        Not only forward
+                        connections but also
+                        recursive connections
+                        with previous (or self)
+                        layers
+                        Recursive connections
+                        increase the depth of
+                        the network
+                        More difficult to train
+               Fully connected network: each neuron from
+               a layer is connected with all neurons of the
+               subsequent layer
+
+Fully          Partially connected network: when the
+               network is not fully connected
+Connected
+Vs Partially   Modelling wise, we can model a network as
+Connected      fully connected but attribute weights equal to
+               0 when neurons are not connected
+               Neural network layers can be easily modelled with matrix data
+               structures
+               For partially connected networks, some of the items in the weight
+               matrix would be 0
+Training Artificial
+Neural Networks
+           History of training methods for ANN but
+           breakthrough with the backpropagation
+           algorithm
+
+           Based on gradient descent technique
+
+           This algorithm consists of the repeated
+Training   application of the following two steps:
+an ANN      Forward pass: in this step we input an example to the network, the
+            example activates the network that generates an output. The
+            predicted output is measured against the available ground truth and
+            an error signal is generated (using a loss function)
+            Backward pass: in this step the calculated error is used to update
+            the weights of the network so to reduce the error in future. This
+            adjustment is achieved by calculating the gradients of the loss with
+            respect to the weights and biases.
+            These two steps are iterated several times (epochs) by using the
+            training samples as input to the network (one by one or in batches)
+            until the network converges to a solution
+              The backpropagation weight update rule is based on the
+              gradient descend method
+              We move one step in the direction that yields the maximum decrease of the
+              computed error (via a loss function L )
+              The direction is the opposite of the gradient of the error
+
+
+
+Weight
+Update Rule   We calculate the derivative of the loss function w.r.t. the weights of the
+              network (i.e. the parameters of the function h) and update the weights based
+              on a learning rate alpha:
+
+
+
+
+              We do this for all the weights in the network
+But how do we compute the gradient?
+              Math, Calculus :)
+            First a quick recap of notations:
+
+
+
+
+Recap on
+notations
+             Assuming a Mean Squared Error (MSE) loss function, for
+             each output and each weight to update we need to
+             compute:
+
+
+
+
+             But the loss function is in function of om and not in
+Chain Rule   function of the desired weight wki... we need to use the
+             chain rule
+
+
+
+
+             Now we can compute the first partial derivative. For the
+             second we need to expand it further depending on the
+             layer of the weight and the depth of the network
+              Let's start with the simple case of a single-layer FF network with a single
+              output using a sigmoid activation function. Therefore, this network will have
+              an input layer of input neurons xi connected to an output neuron o computed
+              as:
+
+
+
+
+              Now we go ahead with the gradient
+
+
+Simple case
+
+              But om is computed as a function of v, not wi, so we need to expand more:
+
+
+
+
+              Now we can compute all the partial derivatives ...
+              First derivative:
+
+
+
+
+              Second derivative:
+
+
+
+
+Computing
+the partial   Third derivative:
+
+derivatives
+
+              All together:
+And if we have more layers?
+       We need to continue with the chain rule to compute the additional derivatives
+
+Previous derivatives from deeper layers can be stored (delta) and backpropagated to earlier
+              layers by mean of a dot product with the corresponding weights
+                  Backpropagation cheatsheet
+
+
+
+Assuming an ANN using a sigmoid activation function, MSE as loss function, and
+considering M training samples, for each epoch we have:
+        And if we have a different loss
+       function or activation function?
+                             We need to compute their derivatives
+
+Artificial Neural Networks tools such as torch already offer them for most of the commonly used
+                              loss functions and activation functions
+
+                  Theory: you need to use calculus to compute the gradient
+
+ Practice: you simply plug-and-play available modules from libraries and forget about calculus
+   Comments on Training ANN
+
+Backpropagation does not guarantee to
+converge to a zero training error
+
+The algorithm may converge to a local optima
+or oscillate indefinitely (a good learning rate
+helps)
+
+Many epochs may be required for convergence.
+The more the network parameters (weights) the
+more the training data and epochs required
+
+Weight initialisation may determine if we will
+reach a local optima
+                                        Summary
+
+Psychology and Anatomy of Human Intelligence
+ Human cognition is defined as those processes by which the sensory input is transformed, reduced,
+ elaborated, stored, recovered, and used
+ There are three levels of cognition: perceptual level, cognitive level and behavioural level
+ A cognitive process can be performed as a generative process or as an inferential process
+ A crucial component to achieve cognition is the generation and use of appropriate mental
+ representations
+ The human brain is responsible for the creation, storage and retrieval of mental representations
+ The brain is composed by the gray matter, responsible for processing and interpreting information and
+ the white matter, responsible for transmitting information
+ The neuron is the main component of the brain, having the function of processing and transmitting
+ information
+ Although a single neuron cannot do much, the interaction of billions of neuron allows the emergence of
+ human cognition and intelligence
+                                   Summary (continue)
+
+Artificial Neural Networks
+ The building block of an artificial neural network (ANN) is the artificial neuron (perceptron)
+ The perceptron takes a set of inputs, multiply them for their assigned weights, sum them and the bias factor together
+ and pass them into an activation function to generate the output of the neuron
+ The activation function can be any function used to output a value from the neuron. However, non-linear
+ differentiable functions are preferred because of properties ensuring the learning of non-linear functions by the
+ network
+ An ANN is specified by the neuron model, the architecture, and the learning algorithm
+ In a single layer feed-forward neural network we simply have an input layer and an output layer. This architecture
+ cannot learn non-linear functions
+ In a multi layer feed-forward neural network, we have one or more hidden layers in addition to the input and output
+ layers. This architecture can learn non-linear functions when using non-linear activation functions
+ In a recursive neural network we do not simply have feed-forward connections but also connections to previous
+ layers of the network. This architecture is much more difficult to train.
+ A network can be fully connected or partially connected
+                                  Summary (continue)
+
+Training Artificial Neural Networks
+ Training ANNs is done by using gradient descent techniques
+ The backpropagation algorithm is one of the possible training algorithms for ANNs and it is implemented by
+ alternating a forward pass with a backward pass several times until convergence
+ During the forward pass, the network is fed an example and the prediction is collected to estimate the error
+ In the backward pass, the error is used to estimate the gradient and update each weight of the network based on
+ that gradient and a learning rate
+ To compute the gradient we need to compute the partial derivative of the loss function w.r.t. the weight we are trying
+ to update
+ To compute this partial derivative, we need to expand it using the chain rule so that we can compute each single
+ factor contributing to the derivative
+ For some specific types of networks, the equations for the gradient are already given and it is easy to use them by
+ simply plug-and-play the equations into the model
+ For other types of networks, the gradient may not be available and it needs to be derived by using the chain rule and
+ calculus
+               Week 11: Social AI
+
+               Recommended activities for Week 10:
+What's next?    The textbook does not cover much about ANN but you can find
+                some information at Chapter 22
+                Complete the workshop exercises for week 10
+                Continue working on Assignment 3
+                If you have questions, please use the forum or send me an email
+
